@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>ESP32 USB-C CH340C — Guía de software</title>
+<link rel="stylesheet" href="estilo.css">
+</head>
+<body>
+
+<div class="pie">
+  <span><b>VASLOTH STORE</b> · Guía de software</span>
+  <span>ESP32 USB-C CH340C — <span class="mono">esp32_ch340c_test.ino</span></span>
+</div>
+
+<div class="hero">
+  <div class="marca">Vasloth Store · Guía de software</div>
+  <h1>ESP32 USB-C · CH340C</h1>
+  <div class="sub">Cómo hacer andar el programa de prueba <span class="mono" style="background:rgba(255,255,255,.14);color:#fff;border-color:transparent">esp32_ch340c_test.ino</span>: verifica que la placa esté viva, imprime los datos del chip (incluido el tamaño real de la flash), parpadea el LED, lee el ADC y escanea redes WiFi. No necesita nada conectado.</div>
+</div>
+
+<h2><span class="n">1</span> Instalación</h2>
+
+<h3>Soporte de placas ESP32</h3>
+<table class="t-compacta">
+  <tbody>
+    <tr><td class="num" style="width:8%"><b>1</b></td><td><span class="mono">Archivo → Preferencias → URLs adicionales de gestor de tarjetas</span>, pegá:<br><span class="mono">https://espressif.github.io/arduino-esp32/package_esp32_index.json</span></td></tr>
+    <tr><td class="num"><b>2</b></td><td><span class="mono">Herramientas → Placa → Gestor de tarjetas</span>, buscá <b>esp32</b> (Espressif Systems) e instalá.</td></tr>
+  </tbody>
+</table>
+
+<h3>Driver del CH340C</h3>
+<div class="grid g3">
+  <div class="card" style="border-left:4px solid #0ca30c">
+    <div class="k">Windows 10 / 11</div>
+    <p>Normalmente se instala solo al enchufar. Si en el Administrador de dispositivos aparece un dispositivo desconocido, bajá <b>CH341SER</b> de <span class="mono">wch.cn</span> (sección Downloads).</p>
+  </div>
+  <div class="card" style="border-left:4px solid #fab219">
+    <div class="k">macOS</div>
+    <p>Hay que instalarlo a mano desde WCH. Es el caso donde el CH340 da más dolores de cabeza.</p>
+  </div>
+  <div class="card" style="border-left:4px solid #0ca30c">
+    <div class="k">Linux</div>
+    <p>Viene en el kernel, no hay que hacer nada. Si el puerto aparece pero no lo podés abrir, agregá tu usuario al grupo <span class="mono">dialout</span> y volvé a iniciar sesión.</p>
+  </div>
+</div>
+
+<p><b>Librerías:</b> ninguna. <span class="mono">WiFi.h</span> viene con el core de ESP32.</p>
+
+<h2><span class="n">2</span> Configuración del IDE</h2>
+
+<table>
+  <thead><tr><th style="width:36%">Opción en <span class="mono">Herramientas</span></th><th style="width:30%">Valor</th><th style="width:34%">Nota</th></tr></thead>
+  <tbody>
+    <tr><td>Placa</td><td><b>ESP32 Dev Module</b></td><td>Sirve para las placas de 30 y de 38 pines</td></tr>
+    <tr><td>Upload Speed</td><td>921600</td><td>Si falla, bajá a 115200</td></tr>
+    <tr><td>Flash Size</td><td>4MB (32Mb)</td><td>El programa te dice el tamaño real de tu placa</td></tr>
+    <tr><td>Puerto</td><td>el que aparezca al enchufar</td><td>—</td></tr>
+  </tbody>
+</table>
+
+<h2><span class="n">3</span> Pasos</h2>
+
+<table class="t-compacta">
+  <thead><tr><th style="width:8%">#</th><th style="width:92%">Qué hacer</th></tr></thead>
+  <tbody>
+    <tr><td class="num"><b>1</b></td><td>Enchufá la placa por USB-C.</td></tr>
+    <tr><td class="num"><b>2</b></td><td>Abrí <span class="mono">esp32_ch340c_test.ino</span>.</td></tr>
+    <tr><td class="num"><b>3</b></td><td>Elegí <b>ESP32 Dev Module</b> y el puerto.</td></tr>
+    <tr><td class="num"><b>4</b></td><td>Subí.</td></tr>
+    <tr><td class="num"><b>5</b></td><td>Abrí el Monitor Serie a <b>115200 baudios</b>.</td></tr>
+  </tbody>
+</table>
+
+<h3>Salida esperada</h3>
+<pre class="mono" style="background:#171716;color:#e1e0d9;padding:11px 13px;border-radius:8px;font-size:9.6px;margin:6px 0;line-height:1.55">=== ESP32 USB-C CH340C ===
+Chip:      ESP32-D0WD-V3
+Revision:  3
+Nucleos:   2
+CPU:       240 MHz
+Flash:     4 MB
+RAM libre: 298000 bytes
+MAC:       3C:61:05:__:__:__
+
+Escaneando WiFi...
+  7 redes:
+   MiRed  -48 dBm
+
+ADC GPIO34: 0  (0.00 V aprox)</pre>
+
+<div class="box dato">
+  <div class="titulo"><span class="ico dato">i</span> El ADC sin nada conectado salta, y es normal</div>
+  <p>GPIO34 es de <b>sólo entrada</b> y no tiene resistencias de pull internas: sin nada conectado, la lectura flota. Poné un potenciómetro entre 3V3 y GND, con el cursor a GPIO34, para verlo variar de verdad.</p>
+</div>
+
+<h2><span class="n">4</span> Si no sube</h2>
+
+<figure>
+<svg viewBox="0 0 700 140" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Método del botón BOOT para subir el programa">
+  <g text-anchor="middle">
+    <rect x="20" y="26" width="180" height="60" rx="9" fill="#2a78d6"/>
+    <text x="110" y="50" font-size="10.5" font-weight="700" fill="#fff">1 · Dale a</text>
+    <text x="110" y="70" font-size="13" font-weight="700" fill="#fff">Subir</text>
+
+    <path d="M 210 56 L 240 56" stroke="#898781" stroke-width="3" marker-end="url(#a2)"/>
+
+    <rect x="250" y="26" width="228" height="60" rx="9" fill="#2a78d6"/>
+    <text x="364" y="46" font-size="10.5" font-weight="700" fill="#fff">2 · Cuando diga «Connecting…»</text>
+    <text x="364" y="68" font-size="13" font-weight="700" fill="#fff">mantené BOOT apretado</text>
+
+    <path d="M 488 56 L 518 56" stroke="#898781" stroke-width="3" marker-end="url(#a2)"/>
+
+    <rect x="528" y="26" width="152" height="60" rx="9" fill="#0ca30c"/>
+    <text x="604" y="46" font-size="10.5" font-weight="700" fill="#fff">3 · Soltalo en</text>
+    <text x="604" y="68" font-size="11.5" font-weight="700" fill="#fff">«Writing at 0x…»</text>
+  </g>
+  <defs><marker id="a2" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="#898781"/></marker></defs>
+  <text x="350" y="114" font-size="9.2" fill="#52514e" text-anchor="middle">Resuelve el 90 % de los casos: fuerza el modo descarga cuando falla el auto-reset por DTR/RTS.</text>
+</svg>
+</figure>
+
+<h2><span class="n">5</span> Errores comunes</h2>
+
+<table class="t-compacta">
+  <thead><tr><th style="width:30%">Síntoma</th><th style="width:35%">Causa</th><th style="width:35%">Solución</th></tr></thead>
+  <tbody>
+    <tr><td>No aparece ningún puerto</td><td>Falta el driver del CH340</td><td>Instalalo desde <span class="mono">wch.cn</span></td></tr>
+    <tr><td>No aparece ningún puerto</td><td>Cable USB-C de sólo carga</td><td>Probá otro cable: muchos no llevan datos</td></tr>
+    <tr><td><span class="mono">Failed to connect… Timed out waiting for packet header</span></td><td>No entró en modo descarga</td><td>Método del botón BOOT (sección 4)</td></tr>
+    <tr><td><span class="mono">MD5 of file does not match</span></td><td>Velocidad de subida muy alta</td><td>Bajá <i>Upload Speed</i> a 115200</td></tr>
+    <tr><td>Monitor Serie con basura</td><td>Baudios mal</td><td>Poné 115200</td></tr>
+    <tr><td><span class="mono">Brownout detector was triggered</span></td><td>Fuente floja</td><td>Puerto USB directo, cable grueso y corto. No un hub sin alimentación</td></tr>
+    <tr><td><span class="mono">Guru Meditation Error</span> al arrancar</td><td>Normalmente cableado o índice fuera de rango</td><td>Desconectá todo y probá la placa sola</td></tr>
+    <tr><td>No arranca con un shield puesto</td><td>GPIO12 en alto al arrancar</td><td>Sacá lo que esté colgado de GPIO12</td></tr>
+    <tr><td>Se cuelga apenas arranca</td><td>Usaste GPIO 6–11</td><td>Son de la flash. Cambiá de pin</td></tr>
+    <tr><td><span class="mono">analogRead()</span> da 0 o basura con WiFi</td><td>Usaste un pin de ADC2</td><td>Pasate a GPIO32–39 (ADC1)</td></tr>
+    <tr><td>Un pin no da salida</td><td>Es GPIO34, 35, 36 o 39</td><td>Son sólo entrada. Usá otro</td></tr>
+    <tr><td>Sensor de 5 V que no lee bien</td><td>Los GPIO son de 3,3 V</td><td>Divisor resistivo o conversor de nivel</td></tr>
+    <tr><td>WiFi con poco alcance</td><td>Antena tapada</td><td>No montes la placa contra chapa ni en caja metálica</td></tr>
+  </tbody>
+</table>
+
+<h2 class="salto" id="s6"><span class="n">6</span> Referencia de pines</h2>
+
+<table class="t-compacta">
+  <thead><tr><th style="width:24%">Grupo</th><th style="width:34%">Pines</th><th style="width:42%">Nota</th></tr></thead>
+  <tbody>
+    <tr style="background:#fdf2f2"><td><b style="color:#a52a2a">Prohibidos</b></td><td class="num">GPIO 6, 7, 8, 9, 10, 11</td><td>Van a la flash interna. Usarlos cuelga la placa</td></tr>
+    <tr style="background:#f2f7fe"><td><b style="color:#1a5aa8">Sólo entrada</b></td><td class="num">GPIO 34, 35, 36 (VP), 39 (VN)</td><td>No dan salida ni tienen pull interno</td></tr>
+    <tr style="background:#fff9ec"><td><b style="color:#8a6d00">Cuidado en el arranque</b></td><td class="num">GPIO 0, 2, 12, 15</td><td>Ver el detalle abajo</td></tr>
+    <tr><td>I²C por defecto</td><td class="num">SDA = 21 · SCL = 22</td><td>Reasignables a cualquier GPIO</td></tr>
+    <tr><td>SPI (VSPI)</td><td class="num">MOSI 23 · MISO 19 · SCK 18 · SS 5</td><td>—</td></tr>
+    <tr><td>UART0</td><td class="num">TX = 1 · RX = 3</td><td><b>No los uses:</b> van al CH340C</td></tr>
+    <tr><td>DAC</td><td class="num">GPIO25, GPIO26</td><td>8 bits</td></tr>
+    <tr><td>ADC1</td><td class="num">GPIO32–39</td><td>Andan siempre, también con WiFi</td></tr>
+    <tr><td>ADC2</td><td class="num">GPIO 0, 2, 4, 12–15, 25–27</td><td><b>No andan con WiFi encendido</b></td></tr>
+    <tr><td>LED de la placa</td><td class="num">GPIO2</td><td>En la mayoría de estas placas</td></tr>
+  </tbody>
+</table>
+
+<div class="box ojo">
+  <div class="titulo"><span class="ico ojo">!</span> Las tres reglas del arranque</div>
+  <ul class="limpia" style="margin-bottom:0">
+    <li><b>GPIO0:</b> en alto arranca normal, en bajo entra en modo descarga. Es el botón BOOT.</li>
+    <li><b>GPIO12 (MTDI):</b> tiene que estar <b>bajo</b> al arrancar. Si algo lo tira a alto, la placa no bootea.</li>
+    <li><b>GPIO2:</b> puede tener cualquier valor para el arranque normal; sólo tiene que estar bajo para entrar en modo descarga.</li>
+  </ul>
+</div>
+
+</body>
+</html>

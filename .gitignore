@@ -1,0 +1,14 @@
+# Basura de Windows y OneDrive
+desktop.ini
+Thumbs.db
+ehthumbs.db
+*.lnk
+~$*
+*.tmp
+
+# macOS
+.DS_Store
+
+# Salidas temporales de la generacion de PDF
+_fuentes/*.png
+_fuentes/*.pdf

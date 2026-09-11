@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>DS18B20 — Guía de software</title>
+<link rel="stylesheet" href="estilo.css">
+</head>
+<body>
+
+<div class="pie">
+  <span><b>VASLOTH STORE</b> · Guía de software</span>
+  <span>DS18B20 sonda sumergible + ESP32</span>
+</div>
+
+<div class="hero">
+  <div class="marca">Vasloth Store · Guía de software</div>
+  <h1>DS18B20 sonda + ESP32</h1>
+  <div class="sub">Cómo hacer andar el programa de ejemplo <span class="mono" style="background:rgba(255,255,255,.14);color:#fff;border-color:transparent">ds18b20_esp32.ino</span>: conexión, librerías, pasos y los errores que te vas a comer.</div>
+</div>
+
+<h2><span class="n">1</span> Conexión</h2>
+
+<table>
+  <thead><tr><th style="width:26%">Cable de la sonda</th><th style="width:20%">ESP32</th><th style="width:54%">Nota</th></tr></thead>
+  <tbody>
+    <tr><td><b style="color:#b8471c">Rojo</b> — VDD</td><td><span class="tag pwr">3V3</span></td><td>También anda con 5 V, pero entonces el pull-up va a 3,3 V igual — nunca metas 5 V al GPIO del ESP32.</td></tr>
+    <tr><td><b style="color:#8a6d00">Amarillo</b> — DQ</td><td><span class="tag i2c">GPIO 4</span></td><td><b>+ resistencia de 4,7 kΩ entre este cable y el rojo.</b> No es opcional y no viene incluida.</td></tr>
+    <tr><td><b>Negro</b> — GND</td><td><span class="tag gnd">GND</span></td><td>—</td></tr>
+  </tbody>
+</table>
+
+<div class="box ojo">
+  <div class="titulo"><span class="ico ojo">!</span> Confirmá los colores antes de alimentar</div>
+  <p>Rojo/amarillo/negro es lo habitual, pero <b>no hay estándar</b>: hay lotes con azul en vez de negro, o blanco en vez de amarillo. Medí con el multímetro en modo continuidad contra el cuerpo de acero (que suele estar unido a GND) o mirá la ficha del producto. Invertir VDD y GND puede quemar el sensor.</p>
+</div>
+
+<figure>
+<svg viewBox="0 0 700 250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Esquema de conexión del DS18B20 al ESP32">
+  <rect x="30" y="40" width="150" height="150" rx="9" fill="#171716"/>
+  <text x="105" y="62" font-size="12" font-weight="700" fill="#fff" text-anchor="middle">ESP32</text>
+  <rect x="150" y="70"  width="46" height="19" rx="3" fill="#eb6834"/><text x="173" y="83.5" font-size="9" font-weight="700" fill="#fff" text-anchor="middle">3V3</text>
+  <rect x="150" y="135" width="46" height="19" rx="3" fill="#2a78d6"/><text x="173" y="148.5" font-size="9" font-weight="700" fill="#fff" text-anchor="middle">GPIO4</text>
+  <rect x="150" y="170" width="46" height="19" rx="3" fill="#52514e"/><text x="173" y="183.5" font-size="9" font-weight="700" fill="#fff" text-anchor="middle">GND</text>
+
+  <rect x="530" y="40" width="140" height="150" rx="9" fill="#171716"/>
+  <text x="600" y="62" font-size="11" font-weight="700" fill="#fff" text-anchor="middle">sonda DS18B20</text>
+  <rect x="514" y="70"  width="46" height="19" rx="3" fill="#d03b3b"/><text x="537" y="83.5" font-size="8.4" font-weight="700" fill="#fff" text-anchor="middle">rojo</text>
+  <rect x="514" y="135" width="46" height="19" rx="3" fill="#c9a227"/><text x="537" y="148.5" font-size="8.4" font-weight="700" fill="#fff" text-anchor="middle">amarillo</text>
+  <rect x="514" y="170" width="46" height="19" rx="3" fill="#2b2b29"/><text x="537" y="183.5" font-size="8.4" font-weight="700" fill="#fff" text-anchor="middle">negro</text>
+
+  <line x1="196" y1="79.5"  x2="514" y2="79.5"  stroke="#d03b3b" stroke-width="3.5"/>
+  <line x1="196" y1="144.5" x2="514" y2="144.5" stroke="#c9a227" stroke-width="3.5"/>
+  <line x1="196" y1="179.5" x2="514" y2="179.5" stroke="#2b2b29" stroke-width="3.5"/>
+
+  <line x1="350" y1="79.5" x2="350" y2="96" stroke="#0b0b0b" stroke-width="2"/>
+  <rect x="336" y="96" width="28" height="32" rx="3" fill="#fff" stroke="#0b0b0b" stroke-width="2"/>
+  <line x1="350" y1="128" x2="350" y2="144.5" stroke="#0b0b0b" stroke-width="2"/>
+  <circle cx="350" cy="79.5" r="4.5" fill="#d03b3b"/>
+  <circle cx="350" cy="144.5" r="4.5" fill="#c9a227"/>
+  <text x="374" y="110" font-size="12" font-weight="700" fill="#0b0b0b">4,7 kΩ</text>
+  <text x="374" y="123" font-size="8.6" fill="#52514e">obligatoria</text>
+
+  <rect x="200" y="208" width="300" height="34" rx="6" fill="#fdf2f2" stroke="#d03b3b" stroke-width="1.2"/>
+  <text x="350" y="222" font-size="9.6" font-weight="700" fill="#a52a2a" text-anchor="middle">Sin el pull-up leés −127 °C o basura.</text>
+  <text x="350" y="235" font-size="9" fill="#a52a2a" text-anchor="middle">DQ es drain abierto: no tiene nivel alto propio.</text>
+</svg>
+</figure>
+
+<div class="box ojo">
+  <div class="titulo"><span class="ico ojo">!</span> Qué pin del ESP32 podés usar</div>
+  <p>Casi cualquiera. En el ESP32 clásico <b>evitá GPIO 6–11</b> (van a la flash y cuelgan la placa) y los pines de <b>sólo entrada</b> 34, 35, 36 y 39 (no tienen pull-up interno ni pueden manejar la línea). Si cambiás de pin, actualizá <span class="mono">#define PIN_ONEWIRE</span> en el programa.</p>
+</div>
+
+<h2><span class="n">2</span> Librerías</h2>
+
+<p>Dos, las dos desde el Library Manager del IDE de Arduino:</p>
+
+<div class="grid g2">
+  <div class="card">
+    <div class="k">1 · OneWire</div>
+    <div class="v" style="font-size:12px">Paul Stoffregen</div>
+    <p>El protocolo de bajo nivel.</p>
+  </div>
+  <div class="card">
+    <div class="k">2 · DallasTemperature</div>
+    <div class="v" style="font-size:12px">Miles Burton</div>
+    <p>Las funciones de temperatura. Al instalarla te ofrece bajar OneWire como dependencia: aceptá.</p>
+  </div>
+</div>
+
+<p><b>Arduino IDE:</b> <span class="mono">Programa → Incluir librería → Administrar bibliotecas…</span>, buscá cada nombre y dale <i>Instalar</i>.</p>
+
+<p><b>PlatformIO</b> — en <span class="mono">platformio.ini</span>:</p>
+<pre class="mono" style="background:var(--plane);padding:9px 11px;border-radius:7px;border:1px solid var(--hairline);font-size:9.4px;margin:6px 0">lib_deps =
+    paulstoffregen/OneWire
+    milesburton/DallasTemperature</pre>
+
+<h2><span class="n">3</span> Pasos</h2>
+
+<table class="t-compacta">
+  <thead><tr><th style="width:8%">#</th><th style="width:92%">Qué hacer</th></tr></thead>
+  <tbody>
+    <tr><td class="num"><b>1</b></td><td>Instalá el soporte de placas ESP32: <span class="mono">Archivo → Preferencias → URLs adicionales de gestor de tarjetas</span> → pegá <span class="mono">https://espressif.github.io/arduino-esp32/package_esp32_index.json</span>. Después <span class="mono">Herramientas → Placa → Gestor de tarjetas</span> → buscá «esp32» → instalar.</td></tr>
+    <tr><td class="num"><b>2</b></td><td>Cableá según la tabla de arriba, con la resistencia puesta.</td></tr>
+    <tr><td class="num"><b>3</b></td><td>Abrí <span class="mono">ds18b20_esp32.ino</span>.</td></tr>
+    <tr><td class="num"><b>4</b></td><td>Si usaste otro pin, cambiá <span class="mono">#define PIN_ONEWIRE 4</span>.</td></tr>
+    <tr><td class="num"><b>5</b></td><td>Elegí tu placa en <span class="mono">Herramientas → Placa</span> y el puerto en <span class="mono">Herramientas → Puerto</span>.</td></tr>
+    <tr><td class="num"><b>6</b></td><td>Subí el programa.</td></tr>
+    <tr><td class="num"><b>7</b></td><td>Abrí el Monitor Serie a <b>115200 baudios</b>.</td></tr>
+  </tbody>
+</table>
+
+<h3>Salida esperada</h3>
+<pre class="mono" style="background:#171716;color:#e1e0d9;padding:11px 13px;border-radius:8px;font-size:9.6px;margin:6px 0;line-height:1.55">Sensores encontrados: 1
+  #0 ROM: 28FF641F8A3C2B45  (familia 0x28 OK)
+Sensor 0: 23.44 C
+---</pre>
+
+<div class="box ok">
+  <div class="titulo"><span class="ico ok">✓</span> El byte de familia</div>
+  <p>Ese <span class="mono">28</span> con el que arranca el ROM es el código de familia del DS18B20. Si te aparece otra cosa, es sospecha fuerte de sensor falsificado — y esos suelen ignorar la configuración de resolución.</p>
+</div>
+
+<h2 class="salto" id="s4"><span class="n">4</span> Errores comunes</h2>
+
+<table class="t-compacta">
+  <thead><tr><th style="width:26%">Síntoma</th><th style="width:37%">Causa</th><th style="width:37%">Solución</th></tr></thead>
+  <tbody>
+    <tr><td rowspan="3"><span class="mono">Sensores encontrados: 0</span></td><td>Falta el pull-up de 4,7 kΩ</td><td>Ponelo entre DQ y 3V3</td></tr>
+    <tr><td>DQ en el pin equivocado</td><td>Verificá <span class="mono">PIN_ONEWIRE</span> contra el cableado real</td></tr>
+    <tr><td>Colores de cable distintos a los esperados</td><td>Cables invertidos: verificá cuál es cuál con el multímetro</td></tr>
+    <tr><td><span class="mono" style="color:#a52a2a;font-weight:700">−127.00 C</span></td><td>El sensor dejó de responder</td><td>Cable flojo, sensor quemado, o pull-up que se soltó</td></tr>
+    <tr><td><span class="mono" style="color:#a52a2a;font-weight:700">85.00 C</span> clavado</td><td>Valor de reset: no llegó a convertir</td><td>Alimentación floja, cable muy largo, o modo parásito mal armado. Alimentá por VDD</td></tr>
+    <tr><td>Basura en el monitor</td><td>Baudios mal</td><td>Poné 115200 en el Monitor Serie</td></tr>
+    <tr><td>Valores que saltan</td><td>Cable largo sin trenzar, o topología en estrella</td><td>Par trenzado, bajá el pull-up a 2,2 kΩ, evitá la estrella</td></tr>
+    <tr><td>Anda uno solo de varios</td><td>Pusiste un pull-up por sensor</td><td><b>Un solo</b> pull-up para todo el bus</td></tr>
+    <tr><td><span class="mono">getDeviceCount()</span> da de más</td><td>Ruido en la línea</td><td>Acortá el cable, apantallalo, revisá masas</td></tr>
+    <tr><td>La resolución no cambia</td><td>Sensor falsificado</td><td>Fijate que el byte de familia sea <span class="mono">0x28</span></td></tr>
+  </tbody>
+</table>
+
+<h2><span class="n">5</span> Varios sensores en el mismo pin</h2>
+
+<p>El programa ya los detecta y los lista solo. El cableado:</p>
+
+<figure>
+<svg viewBox="0 0 700 180" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Tres sensores DS18B20 en paralelo sobre el mismo bus con un único pull-up">
+  <rect x="20" y="40" width="120" height="110" rx="9" fill="#171716"/>
+  <text x="80" y="62" font-size="11" font-weight="700" fill="#fff" text-anchor="middle">ESP32</text>
+  <rect x="110" y="66"  width="46" height="18" rx="3" fill="#eb6834"/><text x="133" y="79" font-size="8.6" font-weight="700" fill="#fff" text-anchor="middle">3V3</text>
+  <rect x="110" y="102" width="46" height="18" rx="3" fill="#2a78d6"/><text x="133" y="115" font-size="8.6" font-weight="700" fill="#fff" text-anchor="middle">GPIO4</text>
+  <rect x="110" y="128" width="46" height="18" rx="3" fill="#52514e"/><text x="133" y="141" font-size="8.6" font-weight="700" fill="#fff" text-anchor="middle">GND</text>
+
+  <line x1="156" y1="75"  x2="670" y2="75"  stroke="#eb6834" stroke-width="3"/>
+  <line x1="156" y1="111" x2="670" y2="111" stroke="#2a78d6" stroke-width="3"/>
+  <line x1="156" y1="137" x2="670" y2="137" stroke="#898781" stroke-width="3"/>
+
+  <line x1="205" y1="75" x2="205" y2="88" stroke="#0b0b0b" stroke-width="2"/>
+  <rect x="193" y="88" width="24" height="14" rx="2" fill="#fff" stroke="#0b0b0b" stroke-width="1.8"/>
+  <line x1="205" y1="102" x2="205" y2="111" stroke="#0b0b0b" stroke-width="2"/>
+  <circle cx="205" cy="75" r="4" fill="#eb6834"/><circle cx="205" cy="111" r="4" fill="#2a78d6"/>
+  <text x="224" y="99" font-size="9.4" font-weight="700" fill="#0b0b0b">4,7 kΩ — UNA sola</text>
+
+  <g>
+    <rect x="300" y="26" width="84" height="26" rx="5" fill="#1baf7a"/><text x="342" y="43" font-size="9.4" font-weight="700" fill="#fff" text-anchor="middle">Sensor 1</text>
+    <rect x="440" y="26" width="84" height="26" rx="5" fill="#1baf7a"/><text x="482" y="43" font-size="9.4" font-weight="700" fill="#fff" text-anchor="middle">Sensor 2</text>
+    <rect x="580" y="26" width="84" height="26" rx="5" fill="#1baf7a"/><text x="622" y="43" font-size="9.4" font-weight="700" fill="#fff" text-anchor="middle">Sensor 3</text>
+  </g>
+  <g stroke-width="2">
+    <line x1="330" y1="52" x2="330" y2="75"  stroke="#eb6834"/><line x1="342" y1="52" x2="342" y2="111" stroke="#2a78d6"/><line x1="354" y1="52" x2="354" y2="137" stroke="#898781"/>
+    <line x1="470" y1="52" x2="470" y2="75"  stroke="#eb6834"/><line x1="482" y1="52" x2="482" y2="111" stroke="#2a78d6"/><line x1="494" y1="52" x2="494" y2="137" stroke="#898781"/>
+    <line x1="610" y1="52" x2="610" y2="75"  stroke="#eb6834"/><line x1="622" y1="52" x2="622" y2="111" stroke="#2a78d6"/><line x1="634" y1="52" x2="634" y2="137" stroke="#898781"/>
+  </g>
+  <g fill="#0b0b0b">
+    <circle cx="330" cy="75" r="3.5" fill="#eb6834"/><circle cx="342" cy="111" r="3.5" fill="#2a78d6"/><circle cx="354" cy="137" r="3.5" fill="#898781"/>
+    <circle cx="470" cy="75" r="3.5" fill="#eb6834"/><circle cx="482" cy="111" r="3.5" fill="#2a78d6"/><circle cx="494" cy="137" r="3.5" fill="#898781"/>
+    <circle cx="610" cy="75" r="3.5" fill="#eb6834"/><circle cx="622" cy="111" r="3.5" fill="#2a78d6"/><circle cx="634" cy="137" r="3.5" fill="#898781"/>
+  </g>
+  <text x="350" y="168" font-size="9" fill="#52514e" text-anchor="middle">Todos los VDD juntos, todos los GND juntos, todos los DQ juntos — y <tspan font-weight="700">una sola</tspan> resistencia para el bus completo.</text>
+</svg>
+</figure>
+
+</body>
+</html>

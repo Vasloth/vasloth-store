@@ -1,0 +1,258 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>ESP32-C3 SuperMini — Ficha técnica</title>
+<link rel="stylesheet" href="estilo.css">
+</head>
+<body>
+
+<div class="pie">
+  <span><b>VASLOTH STORE</b> · Ficha técnica</span>
+  <span>ESP32-C3 SuperMini — Placa de desarrollo</span>
+</div>
+
+<div class="hero">
+  <div class="marca">Vasloth Store · Ficha técnica</div>
+  <h1>ESP32-C3 SuperMini</h1>
+  <div class="sub">Placa de 22,5 × 18 mm con el SoC ESP32-C3 (RISC-V, WiFi 2,4 GHz + Bluetooth 5 LE) y USB-C nativo, sin chip conversor USB-serie. La opción cuando el proyecto tiene que entrar en un espacio chico.</div>
+  <div class="chips">
+    <span class="chip azul">RISC-V 160 MHz</span>
+    <span class="chip aqua">WiFi + BLE 5</span>
+    <span class="chip naranja">USB-C nativo</span>
+    <span class="chip">4 MB flash</span>
+    <span class="chip">13 GPIO</span>
+  </div>
+</div>
+
+<div class="box peligro">
+  <div class="titulo"><span class="ico peligro">!</span> Leé esto antes de usar la placa</div>
+  <p>Esta placa <b>no tiene chip USB-serie</b>: el puerto lo hace el propio ESP32-C3. En el IDE de Arduino, la opción <b><span class="mono">USB CDC On Boot</span> viene DESACTIVADA por defecto</b> (el <span class="mono">boards.txt</span> del core trae <span class="mono">esp32c3.build.cdc_on_boot=0</span>). Con eso apagado <b>el Monitor Serie no muestra absolutamente nada</b>, aunque el programa corra perfecto — y vas a creer que la placa vino fallada. Es, lejos, el problema más común con esta placa.</p>
+</div>
+
+<div class="grid g2">
+  <div class="card">
+    <div class="k">Procesador</div>
+    <div class="v">RISC-V <small>· 160 MHz · 1 núcleo</small></div>
+    <p>400 KB de SRAM y 384 KB de ROM.</p>
+  </div>
+  <div class="card">
+    <div class="k">Alimentación del chip</div>
+    <div class="v">3,0 – 3,6 <small>V (3,3 típ)</small></div>
+    <p>La fuente tiene que poder dar <b>500 mA</b> como mínimo.</p>
+  </div>
+  <div class="card">
+    <div class="k">GPIO utilizables</div>
+    <div class="v">13 <small>de 22 del chip</small></div>
+    <p>GPIO0–GPIO10, más GPIO20 y GPIO21.</p>
+  </div>
+  <div class="card">
+    <div class="k">Temperatura</div>
+    <div class="v">−40 … +85 <small>°C</small></div>
+    <p>Para las variantes ESP32-C3FN4 y FH4.</p>
+  </div>
+</div>
+
+<h2><span class="n">1</span> Pinout</h2>
+
+<figure>
+<svg viewBox="0 0 700 348" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Diagrama de pinout del ESP32-C3 SuperMini con los 16 pines y su función">
+  <!-- placa -->
+  <rect x="248" y="52" width="204" height="240" rx="12" fill="#1d2b1f" stroke="#0b0b0b" stroke-width="1.5"/>
+
+  <!-- USB-C -->
+  <rect x="308" y="34" width="84" height="26" rx="9" fill="#8a8f95"/>
+  <rect x="316" y="41" width="68" height="12" rx="6" fill="#3a3d40"/>
+  <text x="350" y="26" font-size="10" font-weight="700" fill="#0b0b0b" text-anchor="middle">USB-C</text>
+
+  <!-- antena ceramica -->
+  <rect x="322" y="70" width="56" height="24" rx="3" fill="#2f2f2d"/>
+  <text x="350" y="86" font-size="8" fill="#c3c2b7" text-anchor="middle">ANTENA</text>
+
+  <!-- chip -->
+  <rect x="300" y="108" width="100" height="62" rx="5" fill="#111"/>
+  <text x="350" y="134" font-size="10" font-weight="700" fill="#fff" text-anchor="middle">ESP32-C3</text>
+  <text x="350" y="148" font-size="8" fill="#898781" text-anchor="middle">FN4 · 4 MB</text>
+
+  <!-- LED y boton -->
+  <circle cx="288" cy="196" r="7" fill="#2a78d6"/>
+  <text x="288" y="215" font-size="7.5" fill="#c3c2b7" text-anchor="middle">LED</text>
+  <rect x="398" y="188" width="18" height="16" rx="3" fill="#5a5a58"/>
+  <text x="407" y="215" font-size="7.5" fill="#c3c2b7" text-anchor="middle">BOOT</text>
+
+  <text x="350" y="282" font-size="8.5" fill="#898781" text-anchor="middle">22,5 × 18 mm</text>
+
+  <!-- ============ FILA IZQUIERDA ============ -->
+  <!-- y de cada pin -->
+  <g font-size="9.2" font-weight="700" text-anchor="end">
+    <rect x="150" y="72"  width="98" height="17" rx="3" fill="#eb6834"/><text x="242" y="85"  fill="#fff">5V</text>
+    <rect x="150" y="95"  width="98" height="17" rx="3" fill="#52514e"/><text x="242" y="108" fill="#fff">GND</text>
+    <rect x="150" y="118" width="98" height="17" rx="3" fill="#eb6834"/><text x="242" y="131" fill="#fff">3V3</text>
+    <rect x="150" y="141" width="98" height="17" rx="3" fill="#2a78d6"/><text x="242" y="154" fill="#fff">GPIO0 · A0</text>
+    <rect x="150" y="164" width="98" height="17" rx="3" fill="#2a78d6"/><text x="242" y="177" fill="#fff">GPIO1 · A1</text>
+    <rect x="150" y="187" width="98" height="17" rx="3" fill="#fab219"/><text x="242" y="200" fill="#0b0b0b">GPIO2 · A2</text>
+    <rect x="150" y="210" width="98" height="17" rx="3" fill="#2a78d6"/><text x="242" y="223" fill="#fff">GPIO3 · A3</text>
+    <rect x="150" y="233" width="98" height="17" rx="3" fill="#1baf7a"/><text x="242" y="246" fill="#fff">GPIO4 · SCK</text>
+  </g>
+
+  <!-- ============ FILA DERECHA ============ -->
+  <g font-size="9.2" font-weight="700" text-anchor="start">
+    <rect x="452" y="72"  width="106" height="17" rx="3" fill="#1baf7a"/><text x="458" y="85"  fill="#fff">GPIO5 · MISO</text>
+    <rect x="452" y="95"  width="106" height="17" rx="3" fill="#1baf7a"/><text x="458" y="108" fill="#fff">GPIO6 · MOSI</text>
+    <rect x="452" y="118" width="106" height="17" rx="3" fill="#1baf7a"/><text x="458" y="131" fill="#fff">GPIO7 · SS</text>
+    <rect x="452" y="141" width="106" height="17" rx="3" fill="#fab219"/><text x="458" y="154" fill="#0b0b0b">GPIO8 · SDA</text>
+    <rect x="452" y="164" width="106" height="17" rx="3" fill="#fab219"/><text x="458" y="177" fill="#0b0b0b">GPIO9 · SCL</text>
+    <rect x="452" y="187" width="106" height="17" rx="3" fill="#2a78d6"/><text x="458" y="200" fill="#fff">GPIO10</text>
+    <rect x="452" y="210" width="106" height="17" rx="3" fill="#2a78d6"/><text x="458" y="223" fill="#fff">GPIO21 · TX</text>
+    <rect x="452" y="233" width="106" height="17" rx="3" fill="#2a78d6"/><text x="458" y="246" fill="#fff">GPIO20 · RX</text>
+  </g>
+
+  <!-- patitas -->
+  <g fill="#c9a227">
+    <rect x="248" y="76"  width="10" height="9"/><rect x="248" y="99"  width="10" height="9"/>
+    <rect x="248" y="122" width="10" height="9"/><rect x="248" y="145" width="10" height="9"/>
+    <rect x="248" y="168" width="10" height="9"/><rect x="248" y="191" width="10" height="9"/>
+    <rect x="248" y="214" width="10" height="9"/><rect x="248" y="237" width="10" height="9"/>
+    <rect x="442" y="76"  width="10" height="9"/><rect x="442" y="99"  width="10" height="9"/>
+    <rect x="442" y="122" width="10" height="9"/><rect x="442" y="145" width="10" height="9"/>
+    <rect x="442" y="168" width="10" height="9"/><rect x="442" y="191" width="10" height="9"/>
+    <rect x="442" y="214" width="10" height="9"/><rect x="442" y="237" width="10" height="9"/>
+  </g>
+
+  <!-- leyenda, debajo de la placa -->
+  <g font-size="8.8">
+    <rect x="20"  y="308" width="12" height="12" rx="2" fill="#eb6834"/><text x="37"  y="318" fill="#0b0b0b">Alimentación</text>
+    <rect x="140" y="308" width="12" height="12" rx="2" fill="#52514e"/><text x="157" y="318" fill="#0b0b0b">Masa</text>
+    <rect x="216" y="308" width="12" height="12" rx="2" fill="#2a78d6"/><text x="233" y="318" fill="#0b0b0b">GPIO de uso libre</text>
+    <rect x="356" y="308" width="12" height="12" rx="2" fill="#1baf7a"/><text x="373" y="318" fill="#0b0b0b">SPI por defecto en Arduino</text>
+    <rect x="530" y="308" width="12" height="12" rx="2" fill="#fab219"/><text x="547" y="318" fill="#0b0b0b" font-weight="700">Strapping — con cuidado</text>
+    <text x="20" y="338" fill="#52514e">GPIO18 y GPIO19 son el USB nativo del chip y no salen a los headers. GPIO5 es ADC2: no funciona con WiFi encendido.</text>
+  </g>
+</svg>
+<figcaption><b>Los tres pines amarillos son de strapping</b> (GPIO2, GPIO8 y GPIO9): su nivel durante el arranque decide el modo de boot. Además GPIO8 tiene el LED azul y GPIO9 el botón BOOT. <span style="color:#52514e">(Fuentes: funciones de pin y strapping, ESP32-C3 Family Datasheet V1.0, cap. 2 y sección 2.4; asignaciones SPI/I²C, <span class="mono">variants/esp32c3/pins_arduino.h</span> de arduino-esp32; orden físico de los headers, espboards.dev — <b>confirmá contra la serigrafía de tu placa</b>).</span></figcaption>
+</figure>
+
+<h2><span class="n">2</span> El lío del SPI y del I²C</h2>
+
+<p>Circulan dos juegos de números para el SPI y los dos son correctos, según de qué se esté hablando. Esta es la diferencia:</p>
+
+<div class="grid g2">
+  <div class="card" style="border-left:4px solid #1baf7a">
+    <div class="k">Lo que usa Arduino</div>
+    <p style="font-size:10px"><b>SCK = 4 · MISO = 5 · MOSI = 6 · SS = 7</b><br>
+    Es lo que aplica <span class="mono">SPI.begin()</span> sin argumentos. Va por la matriz de GPIO. <b>Para el 99 % de los casos, usá estos.</b></p>
+    <p style="font-size:8.6px;color:#898781">Fuente: <span class="mono">pins_arduino.h</span>, variante <span class="mono">esp32c3</span></p>
+  </div>
+  <div class="card" style="border-left:4px solid #52514e">
+    <div class="k">El IO MUX nativo del chip</div>
+    <p style="font-size:10px"><b>FSPICLK = 6 · FSPID = 7 · FSPIQ = 2 · FSPICS0 = 10</b><br>
+    Es la ruta directa del silicio. Sólo importa si buscás la máxima velocidad de SPI.</p>
+    <p style="font-size:8.6px;color:#898781">Fuente: ESP32-C3 Datasheet V1.0, cap. 2</p>
+  </div>
+</div>
+
+<div class="box ojo">
+  <div class="titulo"><span class="ico ojo">!</span> I²C: no uses los pines por defecto</div>
+  <p>El ESP32-C3 no tiene pines de I²C fijos: se mapean por software a cualquier GPIO. El core de Arduino define <span class="mono">SDA = 8</span> y <span class="mono">SCL = 9</span>, que es lo que toma <span class="mono">Wire.begin()</span> sin argumentos. El problema es que <b>GPIO8 tiene el LED azul y GPIO9 el botón BOOT</b>, y ambos son strapping. El LED parpadea con el tráfico y le mete carga a la línea. Solución de una línea: <span class="mono">Wire.begin(5, 6);</span></p>
+</div>
+
+<h2><span class="n">3</span> Qué pasa en el arranque</h2>
+
+<p>Los tres pines de strapping se leen durante el reset y deciden el modo de boot. Si algo colgado de esos pines fuerza un nivel equivocado, la placa parece muerta.</p>
+
+<table class="t-compacta">
+  <thead><tr><th style="width:16%">Pin</th><th style="width:22%">Por defecto</th><th style="width:31%">SPI Boot (arranque normal)</th><th style="width:31%">Download Boot (modo descarga)</th></tr></thead>
+  <tbody>
+    <tr><td><b>GPIO2</b></td><td>—</td><td>1</td><td>1</td></tr>
+    <tr><td><b>GPIO8</b></td><td>—</td><td>indiferente</td><td>1</td></tr>
+    <tr><td><b>GPIO9</b></td><td>pull-up interno</td><td>1</td><td>0 <span style="color:#898781">(es lo que hace el botón BOOT)</span></td></tr>
+  </tbody>
+</table>
+<p style="font-size:8.6px;color:#898781;margin-top:-4px">Fuente: ESP32-C3 Family Datasheet V1.0, Tabla 4 «Strapping Pins». Por eso la placa arranca sola si no tocás nada: GPIO9 trae pull-up interno de fábrica.</p>
+
+<div class="box ok">
+  <div class="titulo"><span class="ico ok">✓</span> Si no aparece el puerto o no sube el programa</div>
+  <p>Modo descarga a mano: mantené <b>BOOT</b> apretado → apretá y soltá <b>RESET</b> → soltá <b>BOOT</b>. El puerto aparece, subís, y apretás RESET para que corra.</p>
+</div>
+
+<h2 class="salto" id="s4"><span class="n">4</span> Especificaciones completas</h2>
+
+<table>
+  <thead><tr><th style="width:27%">Parámetro</th><th style="width:38%">Valor</th><th style="width:35%">Dónde lo verificás</th></tr></thead>
+  <tbody>
+    <tr><td>SoC</td><td>ESP32-C3 (FN4: 4 MB flash embebida)</td><td class="fuente">ESP32-C3 Family Datasheet V1.0, portada</td></tr>
+    <tr><td>CPU</td><td>RISC-V 32 bits, 1 núcleo, hasta 160 MHz</td><td class="fuente">Datasheet V1.0, sección 3.1</td></tr>
+    <tr><td>SRAM / ROM</td><td class="num">400 KB / 384 KB</td><td class="fuente">Datasheet V1.0, sección 3.1.2</td></tr>
+    <tr><td>Flash</td><td class="num">4 MB</td><td class="fuente">Datasheet V1.0 + <span class="mono">boards.txt</span> (<span class="mono">flash_size=4MB</span>)</td></tr>
+    <tr><td>Alimentación (VDD)</td><td class="num">3,0 / 3,3 / 3,6 V</td><td class="fuente"><b>Tabla 11</b> «Recommended Operating Conditions»</td></tr>
+    <tr><td>Corriente de la fuente</td><td class="num">0,5 A mínimo</td><td class="fuente">Tabla 11, nota 3: «the recommended output current is 500 mA or more»</td></tr>
+    <tr><td>Temperatura</td><td class="num">−40 a +85 °C</td><td class="fuente">Tabla 11 (ESP32-C3FN4 / FH4)</td></tr>
+    <tr><td>WiFi</td><td>802.11 b/g/n, 2,4 GHz</td><td class="fuente">Datasheet V1.0, portada</td></tr>
+    <tr><td>Bluetooth</td><td>Bluetooth 5 (LE)</td><td class="fuente">Datasheet V1.0, portada</td></tr>
+    <tr><td>GPIO del chip</td><td class="num">22 (GPIO0–GPIO21)</td><td class="fuente">Datasheet V1.0, cap. 2</td></tr>
+    <tr><td>GPIO en la placa</td><td class="num">13</td><td class="fuente">espboards.dev / lastminuteengineers.com</td></tr>
+    <tr><td>ADC</td><td>12 bits · ADC1: GPIO0–4 · ADC2: GPIO5</td><td class="fuente">Datasheet V1.0, cap. 2</td></tr>
+    <tr><td>USB nativo</td><td>GPIO18 = D− · GPIO19 = D+</td><td class="fuente">Datasheet V1.0, cap. 2</td></tr>
+    <tr><td>Strapping</td><td>GPIO2, GPIO8, GPIO9</td><td class="fuente">Datasheet V1.0, sección 2.4</td></tr>
+    <tr><td>Dimensiones</td><td class="num">22,5 × 18 mm</td><td class="fuente">mischianti.org (referencia de placa)</td></tr>
+    <tr><td>Headers</td><td>16 pines, 2 × 8, paso 2,54 mm</td><td class="fuente">espboards.dev</td></tr>
+    <tr><td>Peso</td><td class="num">≈ 3 g</td><td class="fuente">Ficha del fabricante de la placa</td></tr>
+  </tbody>
+</table>
+
+<div class="box dato">
+  <div class="titulo"><span class="ico dato">i</span> El chip tiene datasheet; la placa no</div>
+  <p>El <b>ESP32-C3</b> tiene hoja de datos oficial de Espressif y todo lo que sale de ahí es verificable. La <b>placa SuperMini</b>, en cambio, es un diseño genérico chino sin fabricante único ni esquemático publicado: el LED, el regulador y el orden de los headers salen de referencias de terceros, no de un documento del fabricante.</p>
+</div>
+
+<h2><span class="n">5</span> Para qué se usa de verdad</h2>
+
+<div class="grid g3">
+  <div class="card"><div class="k">Sensores a batería</div><p>Sensores de puerta, temperatura o humedad de suelo, donde el tamaño manda.</p></div>
+  <div class="card"><div class="k">Bluetooth LE</div><p>Beacons, mandos y periféricos BLE.</p></div>
+  <div class="card"><div class="k">Domótica</div><p>Nodos de Home Assistant vía ESPHome o Tasmota.</p></div>
+  <div class="card"><div class="k">Wearables</div><p>Proyectos donde no entra un DevKit de 30 pines.</p></div>
+  <div class="card"><div class="k">Reemplazo de ESP8266</div><p>Más rápido, con BLE y con USB nativo.</p></div>
+  <div class="card"><div class="k">Prototipos compactos</div><p>Cuando el producto final tiene que ser chico de verdad.</p></div>
+</div>
+
+<h2><span class="n">6</span> Contra qué compite</h2>
+
+<table class="t-compacta">
+  <thead><tr><th style="width:22%">Alternativa</th><th style="width:39%">Dónde gana el C3 SuperMini</th><th style="width:39%">Dónde te conviene la otra</th></tr></thead>
+  <tbody>
+    <tr><td><b>ESP32 DevKit clásico</b></td><td>Una fracción del tamaño y del consumo, con USB-C y BLE 5.</td><td>Si necesitás muchos pines, doble núcleo, DAC o Bluetooth clásico.</td></tr>
+    <tr><td><b>ESP8266 / Wemos D1</b></td><td>Tiene BLE, ADC usable, más RAM y un core moderno.</td><td>Prácticamente nunca: el ESP8266 ya no recibe funciones nuevas.</td></tr>
+    <tr><td><b>ESP32-S3</b></td><td>Bastante más barato.</td><td>Si precisás USB OTG, PSRAM o mucho más GPIO.</td></tr>
+    <tr><td><b>Arduino Nano 33 IoT</b></td><td>Mucho más barato, con más flash y RAM.</td><td>Si ya estás casado con el ecosistema Arduino oficial.</td></tr>
+  </tbody>
+</table>
+
+<h2><span class="n">7</span> Diagnóstico: qué lo hace fallar</h2>
+
+<table class="t-compacta">
+  <thead><tr><th style="width:26%">Lo que ves</th><th style="width:38%">Qué está pasando</th><th style="width:36%">Cómo se arregla</th></tr></thead>
+  <tbody>
+    <tr><td><b>Monitor Serie vacío,<br>pero el LED parpadea</b></td><td>El <span class="mono">USB CDC On Boot</span> está en <i>Disabled</i>. Sin chip USB-serie, no hay puerto que mostrar.</td><td><b>Ponelo en Enabled</b> y volvé a subir. Es la causa más común, lejos.</td></tr>
+    <tr><td>No aparece ningún puerto</td><td>Cable USB-C de sólo carga, sin líneas de datos.</td><td>Probá otro cable. Muchos cables baratos no llevan datos.</td></tr>
+    <tr><td>La placa parece muerta</td><td>Algo colgado de GPIO9 lo tira a bajo durante el arranque y entra en modo descarga.</td><td>Desconectá lo que esté en GPIO9 (o GPIO2 / GPIO8) y reseteá.</td></tr>
+    <tr><td><span class="mono">LED_BUILTIN</span> no hace nada</td><td>En la variante genérica apunta al LED RGB del DevKitM, que esta placa no tiene.</td><td>Usá el número <span class="mono">8</span> directo. Y ojo: enciende con <span class="mono">LOW</span>.</td></tr>
+    <tr><td>Se reinicia al conectar WiFi</td><td>Fuente floja: el chip pide picos de 500 mA.</td><td>USB directo de la PC, no un hub sin alimentación.</td></tr>
+    <tr><td>Muy poco alcance WiFi</td><td>La antena cerámica va pegada al plano de masa y el PCB no respeta la zona de despeje que pide su propia hoja de datos.</td><td>Es un defecto de diseño conocido. Acercate al router o pasá a la versión «Plus».</td></tr>
+    <tr><td><span class="mono">analogRead()</span> da basura con WiFi</td><td>Usaste GPIO5, que es ADC2.</td><td>ADC2 no funciona con WiFi encendido. Usá GPIO0–GPIO4.</td></tr>
+    <tr><td>Un GPIO quemado</td><td>Le entraron 5 V.</td><td>Los pines son de 3,3 V y no toleran 5 V. No tiene arreglo.</td></tr>
+  </tbody>
+</table>
+
+<div class="box peligro">
+  <div class="titulo"><span class="ico peligro">×</span> Límites que no se pueden esquivar</div>
+  <ul class="limpia mala" style="margin-bottom:0">
+    <li><b>Sólo 13 GPIO</b>, y tres de ellos son de strapping.</li>
+    <li><b>Un solo núcleo.</b> Si bloqueás el <span class="mono">loop()</span>, se resiente el stack de WiFi: nada de <span class="mono">delay()</span> largos en producción.</li>
+    <li><b>Un solo bus SPI usable</b> (SPI2/FSPI); el otro es de la flash.</li>
+    <li><b>No alimentes por el pin 5V con el USB enchufado</b> al mismo tiempo.</li>
+  </ul>
+</div>
+
+</body>
+</html>

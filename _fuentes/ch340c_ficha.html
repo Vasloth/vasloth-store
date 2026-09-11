@@ -1,0 +1,322 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>ESP32 USB-C CH340C — Ficha técnica</title>
+<link rel="stylesheet" href="estilo.css">
+</head>
+<body>
+
+<div class="pie">
+  <span><b>VASLOTH STORE</b> · Ficha técnica</span>
+  <span>Placa ESP32 USB-C con CH340C — 30 pines</span>
+</div>
+
+<div class="hero">
+  <div class="marca">Vasloth Store · Ficha técnica</div>
+  <h1>Placa ESP32 USB-C · CH340C</h1>
+  <div class="sub">Placa de desarrollo con el módulo ESP32-WROOM-32 (doble núcleo, WiFi + Bluetooth clásico y BLE), conector USB-C y conversor USB-serie CH340C. Se publica también como <b>NodeMCU-32S</b> o <b>DevKit V1</b>. Es el caballo de batalla del ESP32: muchos pines, mucha documentación, y todo ejemplo de internet anda tal cual.</div>
+  <div class="chips">
+    <span class="chip azul">Doble núcleo 240 MHz</span>
+    <span class="chip aqua">WiFi + BT clásico + BLE</span>
+    <span class="chip naranja">USB-C</span>
+    <span class="chip">CH340C sin cristal</span>
+    <span class="chip">520 KB SRAM</span>
+  </div>
+</div>
+
+<div class="grid g2">
+  <div class="card">
+    <div class="k">Procesador</div>
+    <div class="v">2 núcleos <small>· Xtensa LX6 · 240 MHz</small></div>
+    <p>520 KB de SRAM y 448 KB de ROM.</p>
+  </div>
+  <div class="card">
+    <div class="k">Alimentación del módulo</div>
+    <div class="v">3,0 – 3,6 <small>V (3,3 típ)</small></div>
+    <p>La fuente tiene que poder dar <b>500 mA</b> como mínimo.</p>
+  </div>
+  <div class="card">
+    <div class="k">Bluetooth</div>
+    <div class="v">Clásico <small>+ BLE</small></div>
+    <p>De los pocos ESP32 con BT clásico (SPP): sirve para equipos viejos.</p>
+  </div>
+  <div class="card">
+    <div class="k">Temperatura</div>
+    <div class="v">−40 … +85 <small>°C</small></div>
+    <p>Antena de PCB integrada en el módulo.</p>
+  </div>
+</div>
+
+<h2><span class="n">1</span> Pinout — los 30 pines</h2>
+
+<figure>
+<svg viewBox="0 0 700 512" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Diagrama de pinout de la placa ESP32 de 30 pines con el USB-C abajo, mostrando los quince pines de cada lado">
+
+  <rect x="262" y="30" width="176" height="440" rx="10" fill="#1d2b1f" stroke="#0b0b0b" stroke-width="1.5"/>
+
+  <rect x="278" y="44" width="144" height="106" rx="4" fill="#b9bcc0"/>
+  <rect x="278" y="44" width="144" height="26" rx="4" fill="#a7abb0"/>
+  <text x="350" y="62" font-size="8.6" font-weight="700" fill="#2b2b29" text-anchor="middle">ANTENA PCB</text>
+  <text x="350" y="104" font-size="10" font-weight="700" fill="#1d1d1b" text-anchor="middle">ESP32-</text>
+  <text x="350" y="118" font-size="10" font-weight="700" fill="#1d1d1b" text-anchor="middle">WROOM-32</text>
+  <text x="350" y="136" font-size="7.6" fill="#4a4a48" text-anchor="middle">doble núcleo · 4 MB</text>
+
+  <rect x="310" y="168" width="80" height="26" rx="3" fill="#111"/>
+  <text x="350" y="185" font-size="8.4" fill="#c3c2b7" text-anchor="middle">CH340C</text>
+
+  <rect x="286" y="206" width="52" height="18" rx="3" fill="#2f2f2d"/>
+  <text x="312" y="219" font-size="7" fill="#c3c2b7" text-anchor="middle">3,3 V</text>
+
+  <circle cx="368" cy="215" r="6" fill="#2a78d6"/>
+  <text x="368" y="234" font-size="7" fill="#c3c2b7" text-anchor="middle">LED</text>
+
+  <rect x="278" y="418" width="34" height="22" rx="3" fill="#5a5a58"/>
+  <text x="295" y="433" font-size="7.4" fill="#fff" text-anchor="middle">EN</text>
+  <rect x="388" y="418" width="34" height="22" rx="3" fill="#5a5a58"/>
+  <text x="405" y="433" font-size="7.4" fill="#fff" text-anchor="middle">BOOT</text>
+
+  <rect x="316" y="470" width="68" height="22" rx="8" fill="#8a8f95"/>
+  <rect x="324" y="476" width="52" height="10" rx="5" fill="#3a3d40"/>
+  <text x="350" y="506" font-size="9.6" font-weight="700" fill="#0b0b0b" text-anchor="middle">USB-C</text>
+
+  <g font-size="8.8" font-weight="700" text-anchor="end">
+    <rect x="44" y="46"  width="212" height="20" rx="3" fill="#0ca30c"/><text x="250" y="60"  fill="#fff">D23 · GPIO23 · MOSI</text>
+    <rect x="44" y="72"  width="212" height="20" rx="3" fill="#0ca30c"/><text x="250" y="86"  fill="#fff">D22 · GPIO22 · SCL</text>
+    <rect x="44" y="98"  width="212" height="20" rx="3" fill="#a33"/><text x="250" y="112" fill="#fff">TX0 · GPIO1 · no usar</text>
+    <rect x="44" y="124" width="212" height="20" rx="3" fill="#a33"/><text x="250" y="138" fill="#fff">RX0 · GPIO3 · no usar</text>
+    <rect x="44" y="150" width="212" height="20" rx="3" fill="#0ca30c"/><text x="250" y="164" fill="#fff">D21 · GPIO21 · SDA</text>
+    <rect x="44" y="176" width="212" height="20" rx="3" fill="#0ca30c"/><text x="250" y="190" fill="#fff">D19 · GPIO19 · MISO</text>
+    <rect x="44" y="202" width="212" height="20" rx="3" fill="#0ca30c"/><text x="250" y="216" fill="#fff">D18 · GPIO18 · SCK</text>
+    <rect x="44" y="228" width="212" height="20" rx="3" fill="#fab219"/><text x="250" y="242" fill="#0b0b0b">D5 · GPIO5 · SS · strap</text>
+    <rect x="44" y="254" width="212" height="20" rx="3" fill="#0ca30c"/><text x="250" y="268" fill="#fff">TX2 · GPIO17</text>
+    <rect x="44" y="280" width="212" height="20" rx="3" fill="#0ca30c"/><text x="250" y="294" fill="#fff">RX2 · GPIO16</text>
+    <rect x="44" y="306" width="212" height="20" rx="3" fill="#0ca30c"/><text x="250" y="320" fill="#fff">D4 · GPIO4 · ADC2</text>
+    <rect x="44" y="332" width="212" height="20" rx="3" fill="#fab219"/><text x="250" y="346" fill="#0b0b0b">D2 · GPIO2 · LED · strap</text>
+    <rect x="44" y="358" width="212" height="20" rx="3" fill="#fab219"/><text x="250" y="372" fill="#0b0b0b">D15 · GPIO15 · strap</text>
+    <rect x="44" y="384" width="212" height="20" rx="3" fill="#52514e"/><text x="250" y="398" fill="#fff">GND</text>
+    <rect x="44" y="410" width="212" height="20" rx="3" fill="#eb6834"/><text x="250" y="424" fill="#fff">3V3 · salida del regulador</text>
+  </g>
+
+  <g font-size="8.8" font-weight="700" text-anchor="start">
+    <rect x="444" y="46"  width="212" height="20" rx="3" fill="#eb6834"/><text x="450" y="60"  fill="#fff">VIN · 5 V de entrada</text>
+    <rect x="444" y="72"  width="212" height="20" rx="3" fill="#52514e"/><text x="450" y="86"  fill="#fff">GND</text>
+    <rect x="444" y="98"  width="212" height="20" rx="3" fill="#0ca30c"/><text x="450" y="112" fill="#fff">D13 · GPIO13 · ADC2</text>
+    <rect x="444" y="124" width="212" height="20" rx="3" fill="#fab219"/><text x="450" y="138" fill="#0b0b0b">D12 · GPIO12 · ¡ojo al bootear!</text>
+    <rect x="444" y="150" width="212" height="20" rx="3" fill="#0ca30c"/><text x="450" y="164" fill="#fff">D14 · GPIO14 · ADC2</text>
+    <rect x="444" y="176" width="212" height="20" rx="3" fill="#0ca30c"/><text x="450" y="190" fill="#fff">D27 · GPIO27 · ADC2</text>
+    <rect x="444" y="202" width="212" height="20" rx="3" fill="#0ca30c"/><text x="450" y="216" fill="#fff">D26 · GPIO26 · DAC2</text>
+    <rect x="444" y="228" width="212" height="20" rx="3" fill="#0ca30c"/><text x="450" y="242" fill="#fff">D25 · GPIO25 · DAC1</text>
+    <rect x="444" y="254" width="212" height="20" rx="3" fill="#0ca30c"/><text x="450" y="268" fill="#fff">D33 · GPIO33 · ADC1</text>
+    <rect x="444" y="280" width="212" height="20" rx="3" fill="#0ca30c"/><text x="450" y="294" fill="#fff">D32 · GPIO32 · ADC1</text>
+    <rect x="444" y="306" width="212" height="20" rx="3" fill="#2a78d6"/><text x="450" y="320" fill="#fff">D35 · GPIO35 · sólo entrada</text>
+    <rect x="444" y="332" width="212" height="20" rx="3" fill="#2a78d6"/><text x="450" y="346" fill="#fff">D34 · GPIO34 · sólo entrada</text>
+    <rect x="444" y="358" width="212" height="20" rx="3" fill="#2a78d6"/><text x="450" y="372" fill="#fff">VN · GPIO39 · sólo entrada</text>
+    <rect x="444" y="384" width="212" height="20" rx="3" fill="#2a78d6"/><text x="450" y="398" fill="#fff">VP · GPIO36 · sólo entrada</text>
+    <rect x="444" y="410" width="212" height="20" rx="3" fill="#52514e"/><text x="450" y="424" fill="#fff">EN · reset</text>
+  </g>
+
+  <g fill="#c9a227">
+    <rect x="256" y="50" width="8" height="12"/><rect x="256" y="76" width="8" height="12"/>
+    <rect x="256" y="102" width="8" height="12"/><rect x="256" y="128" width="8" height="12"/>
+    <rect x="256" y="154" width="8" height="12"/><rect x="256" y="180" width="8" height="12"/>
+    <rect x="256" y="206" width="8" height="12"/><rect x="256" y="232" width="8" height="12"/>
+    <rect x="256" y="258" width="8" height="12"/><rect x="256" y="284" width="8" height="12"/>
+    <rect x="256" y="310" width="8" height="12"/><rect x="256" y="336" width="8" height="12"/>
+    <rect x="256" y="362" width="8" height="12"/><rect x="256" y="388" width="8" height="12"/>
+    <rect x="256" y="414" width="8" height="12"/>
+    <rect x="436" y="50" width="8" height="12"/><rect x="436" y="76" width="8" height="12"/>
+    <rect x="436" y="102" width="8" height="12"/><rect x="436" y="128" width="8" height="12"/>
+    <rect x="436" y="154" width="8" height="12"/><rect x="436" y="180" width="8" height="12"/>
+    <rect x="436" y="206" width="8" height="12"/><rect x="436" y="232" width="8" height="12"/>
+    <rect x="436" y="258" width="8" height="12"/><rect x="436" y="284" width="8" height="12"/>
+    <rect x="436" y="310" width="8" height="12"/><rect x="436" y="336" width="8" height="12"/>
+    <rect x="436" y="362" width="8" height="12"/><rect x="436" y="388" width="8" height="12"/>
+    <rect x="436" y="414" width="8" height="12"/>
+  </g>
+</svg>
+<figcaption>Diagrama con el <b>USB-C hacia abajo</b>, que es como queda la placa apoyada en el protoboard con el conector mirando hacia vos. Si la das vuelta, las dos columnas se invierten. <b>Los verdes son los que tenés que usar primero.</b> Fijate que <b>GPIO 6 a 11 no aparecen</b>: van a la flash interna del módulo y por eso la placa de 30 pines directamente no los saca — es una ventaja, no te podés equivocar. <span style="color:#52514e">(Layout del DevKit V1 / NodeMCU-32S de 30 pines, que es la versión de esta placa.)</span></figcaption>
+</figure>
+
+<div class="grid g3">
+  <div class="card" style="border-left:4px solid #0ca30c">
+    <div class="k">Verde · usalos sin pensar</div>
+    <p>GPIO 4, 13, 14, 16, 17, 18, 19, 21, 22, 23, 25, 26, 27, 32, 33. Entrada, salida, PWM, lo que quieras.</p>
+  </div>
+  <div class="card" style="border-left:4px solid #fab219">
+    <div class="k">Amarillo · con condiciones</div>
+    <p>GPIO 2, 5, 12, 15. Funcionan, pero su nivel durante el arranque cambia el modo de boot.</p>
+  </div>
+  <div class="card" style="border-left:4px solid #2a78d6">
+    <div class="k">Azul · sólo entrada</div>
+    <p>GPIO 34, 35, 36 (VP), 39 (VN). No dan salida y no tienen pull-up ni pull-down internos.</p>
+  </div>
+</div>
+
+<div class="box peligro">
+  <div class="titulo"><span class="ico peligro">!</span> Los dos pines que te van a hacer renegar</div>
+  <ul class="limpia mala" style="margin-bottom:0">
+    <li><b>GPIO12</b> tiene que estar en <b>bajo</b> cuando la placa arranca. Si le colgás algo que lo tire a alto (un display, un sensor con pull-up), <b>la placa no bootea</b> y parece muerta.</li>
+    <li><b>TX0 (GPIO1) y RX0 (GPIO3)</b> están cableados al CH340C. Si los usás para otra cosa, perdés la programación y el Monitor Serie.</li>
+  </ul>
+</div>
+
+<h2 class="salto"><span class="n">2</span> Buses y funciones especiales</h2>
+
+<table class="t-compacta">
+  <thead><tr><th style="width:24%">Función</th><th style="width:38%">Pines</th><th style="width:38%">Nota</th></tr></thead>
+  <tbody>
+    <tr><td><b>I²C</b></td><td class="num">SDA = GPIO21 · SCL = GPIO22</td><td>Reasignables a cualquier GPIO por software</td></tr>
+    <tr><td><b>SPI (VSPI)</b></td><td class="num">MOSI 23 · MISO 19 · SCK 18 · SS 5</td><td>Los que usa <span class="mono">SPI.begin()</span> sin argumentos</td></tr>
+    <tr><td><b>UART0</b></td><td class="num">TX = GPIO1 · RX = GPIO3</td><td><b>Reservado:</b> va al CH340C</td></tr>
+    <tr><td><b>UART2</b></td><td class="num">TX = GPIO17 · RX = GPIO16</td><td>Libre para tus periféricos serie</td></tr>
+    <tr><td><b>DAC</b></td><td class="num">GPIO25 · GPIO26</td><td>8 bits, salida analógica real</td></tr>
+    <tr><td><b>ADC1</b></td><td class="num">GPIO32 · 33 · 34 · 35 · 36 · 39</td><td>Andan siempre, también con WiFi encendido</td></tr>
+    <tr style="background:#fff9ec"><td><b>ADC2</b></td><td class="num">GPIO 2 · 4 · 12 · 13 · 14 · 15 · 25 · 26 · 27</td><td><b>No funcionan con WiFi encendido</b></td></tr>
+    <tr><td><b>PWM</b></td><td>Cualquier GPIO de salida</td><td>16 canales por hardware (LEDC)</td></tr>
+    <tr><td><b>LED de la placa</b></td><td class="num">GPIO2</td><td>El azul que está al lado del módulo</td></tr>
+  </tbody>
+</table>
+
+<div class="box ojo">
+  <div class="titulo"><span class="ico ojo">!</span> ADC2 y WiFi no conviven</div>
+  <p>Es una limitación del silicio del ESP32, no un problema del código: el driver de WiFi se queda con el ADC2. Si tu proyecto necesita leer analógicos <b>y</b> usar WiFi al mismo tiempo, planificá desde el principio usando sólo <b>GPIO32 a GPIO39</b>. Es de los errores que más tiempo hacen perder, porque el programa compila y corre igual — simplemente devuelve cero o basura.</p>
+</div>
+
+<h2><span class="n">3</span> El CH340C y por qué importa</h2>
+
+<p>El chip que convierte USB en puerto serie es lo que hace que puedas programar la placa. La versión <b>C</b> no es un detalle menor:</p>
+
+<div class="grid g2">
+  <div class="card" style="border-left:4px solid #0ca30c">
+    <div class="k">CH340C — el de esta placa</div>
+    <p style="font-size:10px"><b>Reloj integrado: no lleva cristal externo.</b> Menos componentes, menos puntos de falla. El datasheet lo dice textual: <i>«CH340C/N/K/E/X/B have integrated clock, no external crystal required»</i>.</p>
+    <p style="font-size:8.6px;color:#898781">Fuente: WCH, CH340 Datasheet v3B, sección 2</p>
+  </div>
+  <div class="card" style="border-left:4px solid #d03b3b">
+    <div class="k">CH340G — el de las placas viejas</div>
+    <p style="font-size:10px">Necesita un cristal de 12 MHz y dos capacitores. <b>El cristal desoldado o roto es una falla clásica</b> de las placas baratas: la placa enciende pero no aparece el puerto.</p>
+    <p style="font-size:8.6px;color:#898781">Fuente: CH340 Datasheet v3B, sección 4</p>
+  </div>
+</div>
+
+<table class="t-compacta">
+  <thead><tr><th style="width:34%">Parámetro del CH340C</th><th style="width:32%">Valor</th><th style="width:34%">Dónde lo verificás</th></tr></thead>
+  <tbody>
+    <tr><td>Función</td><td>Puente USB 2.0 full-speed a UART</td><td class="fuente">CH340 Datasheet v3B, sección 1</td></tr>
+    <tr><td>Encapsulado</td><td>SOP-16</td><td class="fuente">v3B, sección 3 «Packages»</td></tr>
+    <tr><td>Alimentación</td><td class="num">5 V o 3,3 V</td><td class="fuente">v3B, sección 2</td></tr>
+    <tr><td>VCC en modo 3,3 V</td><td class="num">3,1 / 3,3 / 3,6 V</td><td class="fuente">v3B, parámetros eléctricos</td></tr>
+    <tr><td>Consumo</td><td class="num">4 mA típ · 12 mA máx</td><td class="fuente">v3B, parámetros eléctricos (I<sub>CC</sub>)</td></tr>
+    <tr><td>Velocidad</td><td class="num">50 bps a 2 Mbps</td><td class="fuente">v3B, sección 2</td></tr>
+    <tr><td>Error de baudios en TX</td><td class="num">&lt; 1,2 %</td><td class="fuente">v3B, sección de UART</td></tr>
+    <tr><td>Señales de control</td><td>RTS, DTR, DCD, RI, DSR, CTS</td><td class="fuente">v3B, sección 2</td></tr>
+  </tbody>
+</table>
+
+<h2 class="salto"><span class="n">4</span> Especificaciones del módulo ESP32-WROOM-32</h2>
+
+<table>
+  <thead><tr><th style="width:27%">Parámetro</th><th style="width:38%">Valor</th><th style="width:35%">Dónde lo verificás</th></tr></thead>
+  <tbody>
+    <tr><td>CPU</td><td>Xtensa LX6, doble núcleo, hasta 240 MHz</td><td class="fuente">ESP32-WROOM-32 Datasheet v3.7</td></tr>
+    <tr><td>SRAM</td><td class="num">520 KB</td><td class="fuente">Datasheet v3.7</td></tr>
+    <tr><td>ROM</td><td class="num">448 KB</td><td class="fuente">Datasheet v3.7</td></tr>
+    <tr><td>Flash</td><td class="num">4 MB típico (hay de 8 y 16)</td><td class="fuente"><b>Tabla 1</b> «Ordering Information»</td></tr>
+    <tr><td>Alimentación (VDD33)</td><td class="num">3,0 / 3,3 / 3,6 V</td><td class="fuente"><b>Tabla 13</b> «Recommended Operating Conditions»</td></tr>
+    <tr><td>Corriente de la fuente</td><td class="num">0,5 A mínimo</td><td class="fuente">Tabla 13</td></tr>
+    <tr><td>Temperatura</td><td class="num">−40 a +85 °C</td><td class="fuente">Tabla 13</td></tr>
+    <tr><td>WiFi</td><td>802.11 b/g/n, 2,4 GHz</td><td class="fuente">Datasheet v3.7</td></tr>
+    <tr><td>Bluetooth</td><td>4.2 · BR/EDR (clásico) + BLE</td><td class="fuente">Datasheet v3.7</td></tr>
+    <tr><td>Sensores internos del chip</td><td>Efecto Hall · 10 entradas táctiles capacitivas</td><td class="fuente">Datasheet v3.7</td></tr>
+    <tr><td>Dimensiones de la placa</td><td class="num">≈ 52 × 29 × 15 mm</td><td class="fuente">Ficha del fabricante de la placa</td></tr>
+    <tr><td>Pines del módulo</td><td class="num">38 (la placa expone 30)</td><td class="fuente">Datasheet v3.7, sección 2.2</td></tr>
+    <tr><td>Nivel alto de entrada (V<sub>IH</sub>)</td><td class="num">desde 0,75 × VDD</td><td class="fuente">Tabla 14 «DC Characteristics»</td></tr>
+    <tr><td>Antena</td><td>PCB integrada</td><td class="fuente">Datasheet v3.7</td></tr>
+  </tbody>
+</table>
+
+<div class="box dato">
+  <div class="titulo"><span class="ico dato">i</span> Si estás diseñando un producto para fabricar en serie</div>
+  <p>El datasheet v3.7 del WROOM-32 lleva la leyenda <b>«Not Recommended For New Designs»</b>: Espressif lo reemplazó por el ESP32-WROOM-32E, que es compatible pin a pin. Para prototipos, proyectos personales y educación es irrelevante — la placa funciona perfecto. Pero si tu diseño va a producción, te conviene saber que el módulo de reemplazo es el 32E.</p>
+</div>
+
+<h2><span class="n">5</span> Cómo se alimenta</h2>
+
+<figure>
+<svg viewBox="0 0 700 190" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Las tres formas de alimentar la placa ESP32 y su relación con el regulador">
+  <rect x="20" y="30" width="150" height="52" rx="8" fill="#f9f9f7" stroke="#c3c2b7"/>
+  <text x="95" y="52" font-size="11" font-weight="700" fill="#0b0b0b" text-anchor="middle">USB-C</text>
+  <text x="95" y="68" font-size="9" fill="#52514e" text-anchor="middle">5 V desde la PC</text>
+
+  <rect x="20" y="96" width="150" height="52" rx="8" fill="#f9f9f7" stroke="#c3c2b7"/>
+  <text x="95" y="118" font-size="11" font-weight="700" fill="#0b0b0b" text-anchor="middle">Pin VIN</text>
+  <text x="95" y="134" font-size="9" fill="#52514e" text-anchor="middle">5 V externos</text>
+
+  <path d="M 170 56 L 250 56 L 250 92" stroke="#eb6834" stroke-width="3" fill="none" marker-end="url(#f1)"/>
+  <path d="M 170 122 L 250 122 L 250 108" stroke="#eb6834" stroke-width="3" fill="none"/>
+  <defs><marker id="f1" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="#eb6834"/></marker></defs>
+
+  <rect x="270" y="76" width="150" height="48" rx="8" fill="#171716"/>
+  <text x="345" y="96" font-size="10.5" font-weight="700" fill="#fff" text-anchor="middle">Regulador 3,3 V</text>
+  <text x="345" y="112" font-size="8.6" fill="#898781" text-anchor="middle">(típicamente AMS1117)</text>
+
+  <path d="M 420 100 L 500 100" stroke="#1baf7a" stroke-width="3" fill="none" marker-end="url(#f2)"/>
+  <defs><marker id="f2" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="#1baf7a"/></marker></defs>
+  <rect x="510" y="76" width="170" height="48" rx="8" fill="#1baf7a"/>
+  <text x="595" y="96" font-size="10.5" font-weight="700" fill="#fff" text-anchor="middle">ESP32-WROOM-32</text>
+  <text x="595" y="112" font-size="8.6" fill="#e1e0d9" text-anchor="middle">3,3 V · picos de 500 mA</text>
+
+  <rect x="20" y="158" width="150" height="26" rx="6" fill="#fff9ec" stroke="#fab219"/>
+  <text x="95" y="175" font-size="9.4" font-weight="700" fill="#8a6d00" text-anchor="middle">Pin 3V3 (ya regulado)</text>
+  <path d="M 170 171 L 500 171 L 500 128" stroke="#fab219" stroke-width="2.5" fill="none" stroke-dasharray="5 3"/>
+  <text x="250" y="184" font-size="8.6" fill="#8a6d00">saltea el regulador — entra directo al módulo</text>
+</svg>
+<figcaption>El pin <b>3V3</b> funciona en los dos sentidos: es salida del regulador, y también sirve de entrada si le metés 3,3 V ya limpios. <b>No alimentes por VIN y por USB al mismo tiempo.</b> Y no le saques mucha corriente al pin 3V3 para servos o tiras LED: el regulador se calienta y la placa se reinicia.</figcaption>
+</figure>
+
+<h2><span class="n">6</span> Para qué se usa de verdad</h2>
+
+<div class="grid g3">
+  <div class="card"><div class="k">Domótica</div><p>Nodos de Home Assistant, ESPHome, Tasmota, relés WiFi.</p></div>
+  <div class="card"><div class="k">Adquisición de datos</div><p>Varios sensores a la vez: le sobran pines y buses.</p></div>
+  <div class="card"><div class="k">Puente BT ↔ WiFi</div><p>Bluetooth clásico (SPP) para hablar con equipos y módulos viejos.</p></div>
+  <div class="card"><div class="k">Servidores embebidos</div><p>Paneles de control y APIs locales.</p></div>
+  <div class="card"><div class="k">Tiempo real</div><p>Doble núcleo: uno para la red, otro para el control.</p></div>
+  <div class="card"><div class="k">Robótica</div><p>Sobra PWM — 16 canales LEDC para motores y servos.</p></div>
+</div>
+
+<h2><span class="n">7</span> Contra qué compite</h2>
+
+<table class="t-compacta">
+  <thead><tr><th style="width:22%">Alternativa</th><th style="width:39%">Dónde gana esta placa</th><th style="width:39%">Dónde te conviene la otra</th></tr></thead>
+  <tbody>
+    <tr><td><b>ESP32-C3 SuperMini</b></td><td>Doble núcleo, mucho más GPIO, DAC, BT clásico y mejor antena.</td><td>Si el tamaño manda o el consumo tiene que ser mínimo.</td></tr>
+    <tr><td><b>Placas con CH340G</b></td><td>El CH340C no lleva cristal: menos puntos de falla.</td><td>Nunca — es directamente peor.</td></tr>
+    <tr><td><b>Placas con CP2102</b></td><td>Más barata; en Windows 10/11 el driver suele entrar solo.</td><td>Si usás macOS, donde el CP2102 da menos dolores de cabeza.</td></tr>
+    <tr><td><b>Placas micro-USB</b></td><td>USB-C reversible y con muchos más ciclos. <b>El micro-USB despegado del PCB es la muerte típica</b> de estas placas.</td><td>Nunca, si podés elegir.</td></tr>
+    <tr><td><b>ESP8266</b></td><td>Doble núcleo, Bluetooth, más RAM y más ADC.</td><td>Sólo por precio, en proyectos muy simples.</td></tr>
+  </tbody>
+</table>
+
+<h2><span class="n">8</span> Diagnóstico: qué lo hace fallar</h2>
+
+<table class="t-compacta">
+  <thead><tr><th style="width:30%">Lo que ves</th><th style="width:36%">Qué está pasando</th><th style="width:34%">Cómo se arregla</th></tr></thead>
+  <tbody>
+    <tr><td>No aparece ningún puerto</td><td>Falta el driver del CH340, o el cable USB-C es de sólo carga.</td><td>Driver desde <span class="mono">wch.cn</span>. Probá otro cable.</td></tr>
+    <tr><td><span class="mono">Failed to connect… Timed out waiting for packet header</span></td><td>No entró en modo descarga: falló el auto-reset por DTR/RTS.</td><td>Dale a Subir y, cuando diga <span class="mono">Connecting…</span>, mantené <b>BOOT</b> apretado.</td></tr>
+    <tr><td><span class="mono">MD5 of file does not match</span></td><td>Velocidad de subida demasiado alta para el cable.</td><td>Bajá <i>Upload Speed</i> a 115200.</td></tr>
+    <tr><td><span class="mono">Brownout detector was triggered</span></td><td>Fuente floja: se cae la tensión al encender la radio.</td><td>USB directo de la PC, cable corto y grueso. No un hub sin alimentación.</td></tr>
+    <tr><td>No arranca con un shield puesto</td><td>GPIO12 quedó en alto durante el arranque.</td><td>Sacá lo que esté colgado de GPIO12.</td></tr>
+    <tr><td><span class="mono">analogRead()</span> da 0 o basura</td><td>Usaste un pin de ADC2 con el WiFi encendido.</td><td>Pasate a GPIO32–39 (ADC1).</td></tr>
+    <tr><td>Un pin no da salida</td><td>Es GPIO34, 35, 36 o 39.</td><td>Son sólo entrada. Usá otro.</td></tr>
+    <tr><td>Lecturas analógicas torcidas</td><td>El ADC del ESP32 no es lineal, sobre todo cerca de 0 y de 3,3 V.</td><td>Calibralo si necesitás precisión real.</td></tr>
+    <tr><td>WiFi con poco alcance</td><td>La antena está tapada.</td><td>No montes la placa contra chapa ni dentro de caja metálica.</td></tr>
+    <tr><td>Se reinicia al mover un servo</td><td>Le estás sacando corriente al regulador de la placa.</td><td>Alimentá los servos aparte, con masa común.</td></tr>
+    <tr><td>Perdés el Monitor Serie</td><td>Usaste GPIO1 o GPIO3 para otra cosa.</td><td>Son el UART0 que va al CH340C. Usá UART2 (GPIO16/17).</td></tr>
+  </tbody>
+</table>
+
+</body>
+</html>

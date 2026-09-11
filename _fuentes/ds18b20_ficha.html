@@ -1,0 +1,335 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>DS18B20 — Ficha técnica</title>
+<link rel="stylesheet" href="estilo.css">
+</head>
+<body>
+
+<div class="pie">
+  <span><b>VASLOTH STORE</b> · Ficha técnica</span>
+  <span>DS18B20 — Sonda sumergible 1-Wire</span>
+</div>
+
+<div class="hero">
+  <div class="marca">Vasloth Store · Ficha técnica</div>
+  <h1>DS18B20 · sonda sumergible</h1>
+  <div class="sub">Termómetro digital de 1 solo cable (1-Wire) encapsulado en una vaina de acero inoxidable. Entrega la temperatura ya convertida a número: sin ADC, sin divisor resistivo, sin calibración. Cada chip trae un serial único de 64 bits, así que se cuelgan varios del mismo cable.</div>
+  <div class="chips">
+    <span class="chip azul">1-Wire</span>
+    <span class="chip aqua">−55 a +125 °C</span>
+    <span class="chip naranja">±0,5 °C</span>
+    <span class="chip">3,0 – 5,5 V</span>
+    <span class="chip">Estanco</span>
+  </div>
+</div>
+
+<div class="box peligro">
+  <div class="titulo"><span class="ico peligro">!</span> La sonda no trae la resistencia — hay que agregarla</div>
+  <p>La versión sumergible es <b>el sensor con tres cables pelados y nada más</b>: no incluye la resistencia de pull-up de 4,7 kΩ que el 1-Wire necesita para funcionar. Sin ella vas a leer <b>−127 °C</b> o basura, y vas a pensar que el sensor vino fallado. <b>Conseguí una resistencia de 4,7 kΩ antes de conectarlo</b> — es, lejos, la causa más común de que «no ande».</p>
+</div>
+
+<div class="grid g2">
+  <div class="card">
+    <div class="k">Rango de medición</div>
+    <div class="v">−55 … +125 <small>°C</small></div>
+    <p>Precisión ±0,5 °C sólo entre −10 y +85 °C. <b>Para la sonda encapsulada, máximo recomendado: 100 °C</b> (lo limita el cable, no el chip).</p>
+  </div>
+  <div class="card">
+    <div class="k">Resolución máxima</div>
+    <div class="v">0,0625 <small>°C · 12 bits</small></div>
+    <p>Configurable a 9, 10, 11 o 12 bits. De fábrica viene en 12.</p>
+  </div>
+  <div class="card">
+    <div class="k">Consumo activo</div>
+    <div class="v">1,5 <small>mA máx</small></div>
+    <p>En reposo baja a 1 µA. Ideal para equipos a batería.</p>
+  </div>
+  <div class="card">
+    <div class="k">Sensores por pin</div>
+    <div class="v">Varios <small>· ROM 64 bits</small></div>
+    <p>Todos comparten el mismo cable de datos y se direccionan por su serial.</p>
+  </div>
+</div>
+
+<h2><span class="n">1</span> Qué es y qué hay adentro</h2>
+
+<figure>
+<svg viewBox="0 0 700 260" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="La sonda sumergible DS18B20 con sus tres cables y el chip TO-92 que lleva adentro">
+  <defs>
+    <linearGradient id="acero" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#e2e5e8"/><stop offset="0.45" stop-color="#b0b5ba"/><stop offset="1" stop-color="#8b9196"/>
+    </linearGradient>
+    <linearGradient id="cuerpo" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#3a3a38"/><stop offset="1" stop-color="#171716"/>
+    </linearGradient>
+  </defs>
+
+  <text x="16" y="20" font-size="12.5" font-weight="700" fill="#0b0b0b">Sonda sumergible</text>
+  <text x="16" y="36" font-size="9.6" fill="#52514e">Vaina de acero inoxidable, cable de 1 m (típico)</text>
+
+  <!-- vaina -->
+  <rect x="16" y="56" width="150" height="30" rx="8" fill="url(#acero)"/>
+  <path d="M 160 56 h 8 a 15 15 0 0 1 0 30 h -8 z" fill="#9ba0a5"/>
+  <rect x="16" y="60" width="150" height="8" rx="4" fill="#eef0f2" opacity=".7"/>
+  <!-- prensa cable -->
+  <rect x="4" y="60" width="16" height="22" rx="4" fill="#5a5f63"/>
+
+  <!-- cable -->
+  <path d="M 6 71 C -14 71 -14 120 20 120 L 360 120" stroke="#2b2b29" stroke-width="11" fill="none" stroke-linecap="round"/>
+
+  <!-- tres hilos -->
+  <path d="M 360 120 L 430 96" stroke="#d03b3b" stroke-width="4.5" fill="none" stroke-linecap="round"/>
+  <path d="M 360 120 L 430 120" stroke="#c9a227" stroke-width="4.5" fill="none" stroke-linecap="round"/>
+  <path d="M 360 120 L 430 144" stroke="#2b2b29" stroke-width="4.5" fill="none" stroke-linecap="round"/>
+
+  <rect x="434" y="86"  width="120" height="20" rx="4" fill="#fdeee7"/>
+  <text x="444" y="100" font-size="9.4" font-weight="700" fill="#b8471c">rojo → VDD</text>
+  <rect x="434" y="110" width="120" height="20" rx="4" fill="#fff6e0"/>
+  <text x="444" y="124" font-size="9.4" font-weight="700" fill="#8a6d00">amarillo → DQ</text>
+  <rect x="434" y="134" width="120" height="20" rx="4" fill="#efeee9"/>
+  <text x="444" y="148" font-size="9.4" font-weight="700" fill="#3a3a38">negro → GND</text>
+
+  <rect x="434" y="162" width="256" height="30" rx="5" fill="#fdf2f2" stroke="#d03b3b" stroke-width="1"/>
+  <text x="443" y="175" font-size="8.6" font-weight="700" fill="#a52a2a">Los colores varían por lote.</text>
+  <text x="443" y="186" font-size="8.6" fill="#a52a2a">Verificá con multímetro antes de alimentar.</text>
+
+  <!-- separador -->
+  <line x1="200" y1="150" x2="200" y2="252" stroke="#e1e0d9" stroke-width="1.5" stroke-dasharray="4 4"/>
+
+  <!-- TO-92 interno -->
+  <text x="16" y="172" font-size="10.6" font-weight="700" fill="#0b0b0b">Adentro lleva esto</text>
+  <text x="16" y="186" font-size="9" fill="#52514e">El mismo chip en TO-92</text>
+
+  <path d="M 40 224 A 34 24 0 0 1 108 224 L 108 240 L 40 240 Z" fill="url(#cuerpo)"/>
+  <text x="74" y="234" font-size="8.4" font-weight="700" fill="#fff" text-anchor="middle">DS18B20</text>
+  <rect x="52" y="240" width="5" height="12" fill="#898781"/>
+  <rect x="71" y="240" width="5" height="12" fill="#898781"/>
+  <rect x="90" y="240" width="5" height="12" fill="#898781"/>
+  <text x="128" y="234" font-size="8.4" fill="#52514e">1 GND · 2 DQ · 3 VDD</text>
+  <text x="128" y="246" font-size="8.4" fill="#898781">(cara plana hacia vos)</text>
+
+  <!-- ventajas de la sonda -->
+  <rect x="216" y="206" width="474" height="46" rx="7" fill="#f1faf1" stroke="#0ca30c" stroke-width="1.1"/>
+  <text x="228" y="222" font-size="9.4" font-weight="700" fill="#076b07">Qué te da la vaina de acero</text>
+  <text x="228" y="236" font-size="8.8" fill="#0b0b0b">Agua, aceite o tierra (no corrosivos) · hasta 100 °C · resiste golpes · el cable lo aleja de la electrónica</text>
+  <text x="228" y="247" font-size="8.8" fill="#0b0b0b">A cambio, responde más lento que el TO-92 pelado: la vaina tiene inercia térmica.</text>
+</svg>
+<figcaption>La sonda sumergible es exactamente el mismo chip DS18B20, metido en una vaina de acero con un cable de tres hilos. Todas las especificaciones eléctricas de esta ficha valen igual. <span style="color:#52514e">(Fuente del pinout del chip: datasheet DS18B20, Tabla 1 «Detailed Pin Description»)</span></figcaption>
+</figure>
+
+<h2><span class="n">2</span> Cómo se conecta</h2>
+
+<figure>
+<svg viewBox="0 0 700 292" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Esquema de conexión de la sonda DS18B20 a un ESP32 con resistencia de pull-up de 4,7 kilohm">
+  <!-- ESP32 -->
+  <rect x="30" y="58" width="150" height="176" rx="9" fill="#171716"/>
+  <text x="105" y="80" font-size="12" font-weight="700" fill="#fff" text-anchor="middle">ESP32</text>
+  <rect x="150" y="85.5"  width="46" height="19" rx="3" fill="#eb6834"/>
+  <text x="173" y="99" font-size="9" font-weight="700" fill="#fff" text-anchor="middle">3V3</text>
+  <rect x="150" y="160.5" width="46" height="19" rx="3" fill="#2a78d6"/>
+  <text x="173" y="174" font-size="9" font-weight="700" fill="#fff" text-anchor="middle">GPIO4</text>
+  <rect x="150" y="200.5" width="46" height="19" rx="3" fill="#52514e"/>
+  <text x="173" y="214" font-size="9" font-weight="700" fill="#fff" text-anchor="middle">GND</text>
+
+  <!-- sonda -->
+  <rect x="560" y="150" width="110" height="26" rx="7" fill="#b0b5ba"/>
+  <rect x="560" y="154" width="110" height="7" rx="3" fill="#e2e5e8" opacity=".8"/>
+  <path d="M 664 150 h 6 a 13 13 0 0 1 0 26 h -6 z" fill="#9ba0a5"/>
+  <text x="615" y="192" font-size="9.6" font-weight="700" fill="#0b0b0b" text-anchor="middle">sonda DS18B20</text>
+
+  <!-- cables al conector de la sonda -->
+  <line x1="196" y1="95"  x2="520" y2="95"  stroke="#d03b3b" stroke-width="3.5"/>
+  <line x1="196" y1="170" x2="520" y2="170" stroke="#c9a227" stroke-width="3.5"/>
+  <line x1="196" y1="210" x2="520" y2="210" stroke="#2b2b29" stroke-width="3.5"/>
+
+  <!-- union de los tres al cuerpo de la sonda -->
+  <path d="M 520 95  L 556 155" stroke="#d03b3b" stroke-width="3.5" fill="none"/>
+  <path d="M 520 170 L 556 163" stroke="#c9a227" stroke-width="3.5" fill="none"/>
+  <path d="M 520 210 L 556 171" stroke="#2b2b29" stroke-width="3.5" fill="none"/>
+
+  <!-- pull-up -->
+  <line x1="350" y1="95"  x2="350" y2="114" stroke="#0b0b0b" stroke-width="2"/>
+  <rect x="336" y="114" width="28" height="42" rx="3" fill="#fff" stroke="#0b0b0b" stroke-width="2"/>
+  <line x1="350" y1="156" x2="350" y2="170" stroke="#0b0b0b" stroke-width="2"/>
+  <circle cx="350" cy="95"  r="4.5" fill="#d03b3b"/>
+  <circle cx="350" cy="170" r="4.5" fill="#c9a227"/>
+  <text x="374" y="132" font-size="12" font-weight="700" fill="#0b0b0b">4,7 kΩ</text>
+  <text x="374" y="146" font-size="8.6" fill="#52514e">no viene incluida</text>
+
+  <!-- etiquetas de cables -->
+  <text x="215" y="88" font-size="8.6" fill="#b8471c" font-weight="700">rojo · VDD</text>
+  <text x="215" y="163" font-size="8.6" fill="#8a6d00" font-weight="700">amarillo · DQ</text>
+  <text x="215" y="203" font-size="8.6" fill="#3a3a38" font-weight="700">negro · GND</text>
+
+  <!-- destaque -->
+  <rect x="200" y="248" width="300" height="36" rx="6" fill="#fdf2f2" stroke="#d03b3b" stroke-width="1.2"/>
+  <text x="350" y="263" font-size="9.8" font-weight="700" fill="#a52a2a" text-anchor="middle">La resistencia NO es opcional.</text>
+  <text x="350" y="276" font-size="9" fill="#a52a2a" text-anchor="middle">DQ es drain abierto: sin ella no hay nivel alto y no leés nada.</text>
+</svg>
+<figcaption>Conexión con <b>alimentación normal</b>, que es la recomendada. La resistencia de 4,7 kΩ va entre el cable de datos y el de alimentación, no a masa. Si alimentás la sonda con 5 V, el pull-up igual va a 3,3 V: nunca metas 5 V al GPIO de un ESP32. <span style="color:#52514e">(Fuente: datasheet DS18B20, figuras de la sección 1-Wire Bus System)</span></figcaption>
+</figure>
+
+<div class="box ojo">
+  <div class="titulo"><span class="ico ojo">!</span> Modo parásito: por qué conviene evitarlo</div>
+  <p>El DS18B20 puede alimentarse del propio pin de datos, dejando VDD a masa. Suena lindo pero exige que el micro fuerce un <i>strong pull-up</i> (un MOSFET a VDD) durante toda la conversión, porque el chip consume hasta 1,5 mA y —en palabras del datasheet— <span class="mono">«the DQ line will not have sufficient drive due to the 5k pullup resistor»</span>. Usá alimentación normal salvo que tengas una razón muy concreta.</p>
+</div>
+
+<h2><span class="n">3</span> Resolución contra velocidad</h2>
+
+<p>La resolución se configura por software y se paga en tiempo. Es un intercambio directo: cada bit extra <b>duplica</b> el tiempo de conversión.</p>
+
+<figure>
+<svg viewBox="0 0 700 220" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Gráfico de barras: tiempo máximo de conversión según la resolución configurada">
+  <!-- grilla -->
+  <line x1="92" y1="30"  x2="660" y2="30"  stroke="#e1e0d9" stroke-width="1"/>
+  <line x1="92" y1="70"  x2="660" y2="70"  stroke="#e1e0d9" stroke-width="1"/>
+  <line x1="92" y1="110" x2="660" y2="110" stroke="#e1e0d9" stroke-width="1"/>
+  <line x1="92" y1="150" x2="660" y2="150" stroke="#e1e0d9" stroke-width="1"/>
+  <line x1="92" y1="190" x2="660" y2="190" stroke="#c3c2b7" stroke-width="1.5"/>
+
+  <!-- eje Y -->
+  <text x="84" y="34"  font-size="8.5" fill="#898781" text-anchor="end">800</text>
+  <text x="84" y="74"  font-size="8.5" fill="#898781" text-anchor="end">600</text>
+  <text x="84" y="114" font-size="8.5" fill="#898781" text-anchor="end">400</text>
+  <text x="84" y="154" font-size="8.5" fill="#898781" text-anchor="end">200</text>
+  <text x="84" y="194" font-size="8.5" fill="#898781" text-anchor="end">0</text>
+  <text x="40" y="112" font-size="9" fill="#52514e" font-weight="600" transform="rotate(-90 40 112)" text-anchor="middle">ms</text>
+
+  <!-- barras: escala 800ms = 160px -->
+  <!-- 9 bit 93.75ms -> 18.75px -->
+  <rect x="122" y="171.3" width="82" height="18.7" rx="4" fill="#2a78d6"/>
+  <text x="163" y="164" font-size="10.5" font-weight="700" fill="#0b0b0b" text-anchor="middle">93,75 ms</text>
+  <text x="163" y="206" font-size="10" font-weight="700" fill="#0b0b0b" text-anchor="middle">9 bits</text>
+  <text x="163" y="217" font-size="8.4" fill="#898781" text-anchor="middle">0,5 °C</text>
+
+  <!-- 10 bit 187.5 -> 37.5px -->
+  <rect x="257" y="152.5" width="82" height="37.5" rx="4" fill="#2a78d6"/>
+  <text x="298" y="145" font-size="10.5" font-weight="700" fill="#0b0b0b" text-anchor="middle">187,5 ms</text>
+  <text x="298" y="206" font-size="10" font-weight="700" fill="#0b0b0b" text-anchor="middle">10 bits</text>
+  <text x="298" y="217" font-size="8.4" fill="#898781" text-anchor="middle">0,25 °C</text>
+
+  <!-- 11 bit 375 -> 75px -->
+  <rect x="392" y="115" width="82" height="75" rx="4" fill="#2a78d6"/>
+  <text x="433" y="107" font-size="10.5" font-weight="700" fill="#0b0b0b" text-anchor="middle">375 ms</text>
+  <text x="433" y="206" font-size="10" font-weight="700" fill="#0b0b0b" text-anchor="middle">11 bits</text>
+  <text x="433" y="217" font-size="8.4" fill="#898781" text-anchor="middle">0,125 °C</text>
+
+  <!-- 12 bit 750 -> 150px -->
+  <rect x="527" y="40" width="82" height="150" rx="4" fill="#104281"/>
+  <text x="568" y="32" font-size="10.5" font-weight="700" fill="#0b0b0b" text-anchor="middle">750 ms</text>
+  <text x="568" y="206" font-size="10" font-weight="700" fill="#0b0b0b" text-anchor="middle">12 bits</text>
+  <text x="568" y="217" font-size="8.4" fill="#898781" text-anchor="middle">0,0625 °C</text>
+  <rect x="527" y="46" width="82" height="15" rx="3" fill="#fff" opacity=".18"/>
+  <text x="568" y="57" font-size="8" font-weight="700" fill="#fff" text-anchor="middle">DE FÁBRICA</text>
+</svg>
+<figcaption>Tiempo <b>máximo</b> de conversión por resolución. Si tu aplicación tolera 0,5 °C de paso, bajar a 9 bits te da lecturas 8 veces más rápidas. <span style="color:#52514e">(Fuente: datasheet DS18B20, Tabla 3 «Thermometer Resolution Configuration»)</span></figcaption>
+</figure>
+
+<h2 class="salto" id="s4"><span class="n">4</span> Especificaciones completas</h2>
+
+<table>
+  <thead>
+    <tr><th style="width:27%">Parámetro</th><th style="width:38%">Valor</th><th style="width:35%">Dónde lo verificás</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>Rango de medición</td><td class="num">−55 °C a +125 °C</td><td class="fuente">Datasheet, Features y DC Electrical Characteristics</td></tr>
+    <tr><td>Precisión</td><td class="num">±0,5 °C (de −10 a +85 °C)</td><td class="fuente">DC Electrical Characteristics, «Thermometer Error»</td></tr>
+    <tr><td>Precisión rango completo</td><td class="num">±2 °C (de −55 a +125 °C)</td><td class="fuente">DC Electrical Characteristics</td></tr>
+    <tr><td>Alimentación (VDD)</td><td class="num">3,0 V a 5,5 V</td><td class="fuente">DC Electrical Characteristics: «VDD=3.0V to 5.5V»</td></tr>
+    <tr><td>Resolución</td><td>9 / 10 / 11 / 12 bits →<br>0,5 / 0,25 / 0,125 / 0,0625 °C</td><td class="fuente">Sección «Operation — Measuring Temperature»</td></tr>
+    <tr><td>Resolución de fábrica</td><td>12 bits (EEPROM R0=1, R1=1)</td><td class="fuente">Tabla 3</td></tr>
+    <tr><td>Tiempo de conversión</td><td class="num">93,75 / 187,5 / 375 / 750 ms</td><td class="fuente">Tabla 3</td></tr>
+    <tr><td>Protocolo</td><td>1-Wire (Dallas), 1 pin + GND</td><td class="fuente">Sección Description</td></tr>
+    <tr><td>Identificador</td><td>ROM láser de 64 bits, único</td><td class="fuente">Sección Overview</td></tr>
+    <tr><td>Consumo en reposo</td><td class="num">750 nA típ · 1000 nA máx</td><td class="fuente">DC Electrical Characteristics (I<sub>DDS</sub>)</td></tr>
+    <tr><td>Consumo activo</td><td class="num">1 mA típ · 1,5 mA máx</td><td class="fuente">DC Electrical Characteristics (I<sub>DD</sub>) + nota 4</td></tr>
+    <tr><td>Pull-up recomendado</td><td class="num">≈5 kΩ (los esquemas usan 4,7 kΩ)</td><td class="fuente">Sección 1-Wire Bus System y figuras</td></tr>
+    <tr><td>Formato del dato</td><td>16 bits, complemento a dos, LSB primero</td><td class="fuente">Sección «Operation — Measuring Temperature»</td></tr>
+    <tr><td>Nivel alto de entrada (V<sub>IH</sub>)</td><td class="num">2,2 V mín (local) · 3,0 V (parásito)</td><td class="fuente">DC Electrical Characteristics</td></tr>
+  </tbody>
+</table>
+
+<div class="box dato">
+  <div class="titulo"><span class="ico dato">i</span> Sobre la hoja de datos usada</div>
+  <p>Los valores salen del datasheet <b>DS18B20 «Programmable Resolution 1-Wire Digital Thermometer»</b> de Dallas Semiconductor / Maxim, verificado directamente (copia en <span class="mono">cdn.sparkfun.com/datasheets/Sensors/Temp/DS18B20.pdf</span>). Esa copia lleva la marca <i>PRELIMINARY</i>; los datos citados son estables entre revisiones, pero si alguno es crítico para vos, cotejalo contra la versión actual que mantiene Analog Devices en <span class="mono">analog.com/en/products/ds18b20.html</span>.</p>
+</div>
+
+<h2><span class="n">5</span> Para qué se usa de verdad</h2>
+
+<div class="grid g3">
+  <div class="card"><div class="k">Frío</div><p>Heladeras, cámaras de frío, fermentadores y control de cadena de frío.</p></div>
+  <div class="card"><div class="k">Líquidos</div><p>Calderas, piletas, acuarios y tanques — con la versión sonda estanca.</p></div>
+  <div class="card"><div class="k">Redes de sensores</div><p>Varios puntos sobre un mismo cable en tableros, invernaderos y racks.</p></div>
+  <div class="card"><div class="k">Protección térmica</div><p>Motores, disipadores y packs de batería.</p></div>
+  <div class="card"><div class="k">Data loggers</div><p>Registro prolongado a batería, aprovechando el consumo en reposo de 1 µA.</p></div>
+  <div class="card"><div class="k">Domótica</div><p>Nodos de Home Assistant / ESPHome, termostatos y control de calefacción.</p></div>
+</div>
+
+<h2><span class="n">6</span> Contra qué compite</h2>
+
+<table class="t-compacta">
+  <thead>
+    <tr><th style="width:20%">Alternativa</th><th style="width:40%">Dónde gana el DS18B20</th><th style="width:40%">Dónde te conviene la otra</th></tr>
+  </thead>
+  <tbody>
+    <tr><td><b>NTC / termistor</b></td><td>Sin ADC, sin divisor, sin linealizar, sin calibrar. Sale en °C directo.</td><td>Si necesitás respuesta muy rápida o costo mínimo por unidad.</td></tr>
+    <tr><td><b>LM35 / TMP36</b></td><td>El dato es digital: el cable largo no le mete ruido ni error.</td><td>Si querés lectura continua sin esperar los 750 ms de conversión.</td></tr>
+    <tr><td><b>DHT11 / DHT22</b></td><td>Mucho más preciso y con rango muchísimo más amplio.</td><td>Si además necesitás <b>humedad</b>: el DS18B20 no la mide.</td></tr>
+    <tr><td><b>Termocupla + MAX6675</b></td><td>Más simple y barato; no necesita compensación de junta fría.</td><td>Por encima de 125 °C el DS18B20 directamente no llega.</td></tr>
+  </tbody>
+</table>
+
+<h2><span class="n">7</span> Diagnóstico: qué lo hace fallar</h2>
+
+<table class="t-compacta">
+  <thead>
+    <tr><th style="width:20%">Lo que ves</th><th style="width:42%">Qué está pasando</th><th style="width:38%">Cómo se arregla</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><span class="mono" style="color:#a52a2a;font-weight:700">−127 °C</span></td>
+      <td>Nadie responde en el bus. Es el error número uno y casi siempre es el pull-up.</td>
+      <td>Poné los 4,7 kΩ entre DQ y VDD. Revisá el cableado y que el sensor no esté al revés.</td>
+    </tr>
+    <tr>
+      <td><span class="mono" style="color:#a52a2a;font-weight:700">85,0 °C</span></td>
+      <td>Es el valor de reset del registro de temperatura: el chip se reinició o no llegó a terminar la conversión.</td>
+      <td>Alimentación floja, modo parásito mal armado, o leíste antes de esperar los 750 ms.</td>
+    </tr>
+    <tr>
+      <td>Valores que saltan</td>
+      <td>Reflexiones en la línea por cable largo o topología en estrella.</td>
+      <td>Par trenzado, bajá el pull-up a 2,2 kΩ y evitá la estrella.</td>
+    </tr>
+    <tr>
+      <td>Anda uno solo de varios</td>
+      <td>Pusiste un pull-up por sensor en vez de uno para todo el bus.</td>
+      <td>Una sola resistencia para el bus completo.</td>
+    </tr>
+    <tr>
+      <td>La resolución no cambia</td>
+      <td>Sospecha fuerte de DS18B20 falsificado: hay muchos clones que ignoran la configuración.</td>
+      <td>Verificá que el byte de familia del ROM sea <span class="mono">0x28</span>. El programa de ejemplo lo imprime.</td>
+    </tr>
+    <tr>
+      <td>Mide de más en aire</td>
+      <td>Autocalentamiento del entorno, no del chip: hay electrónica al lado.</td>
+      <td>Alejá el sensor de fuentes de calor dentro del gabinete.</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="box peligro">
+  <div class="titulo"><span class="ico peligro">×</span> Los cuatro límites que no se pueden esquivar</div>
+  <ul class="limpia mala" style="margin-bottom:0">
+    <li><b>No es rápido.</b> 750 ms por lectura a 12 bits. Si necesitás muestreo veloz, bajá la resolución o cambiá de sensor.</li>
+    <li><b>±0,5 °C sólo entre −10 y +85 °C.</b> En los extremos del rango la tolerancia se va a ±2 °C.</li>
+    <li><b>Sin pull-up no funciona.</b> No hay configuración de software que lo compense.</li>
+    <li><b>La sonda aguanta hasta 100 °C, no 125.</b> El chip llega a 125 °C, pero el cable y el sellado de la vaina no. Y sólo en <b>fluidos no corrosivos</b>: agua, aceite, glicol. Nada de ácidos ni salmuera concentrada.</li>
+  </ul>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,173 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>ESP32-C3 SuperMini — Guía de software</title>
+<link rel="stylesheet" href="estilo.css">
+</head>
+<body>
+
+<div class="pie">
+  <span><b>VASLOTH STORE</b> · Guía de software</span>
+  <span>ESP32-C3 SuperMini — <span class="mono">esp32c3_supermini_test.ino</span></span>
+</div>
+
+<div class="hero">
+  <div class="marca">Vasloth Store · Guía de software</div>
+  <h1>ESP32-C3 SuperMini</h1>
+  <div class="sub">Cómo hacer andar el programa de prueba <span class="mono" style="background:rgba(255,255,255,.14);color:#fff;border-color:transparent">esp32c3_supermini_test.ino</span>: verifica que la placa esté viva, imprime los datos del chip, parpadea el LED, lee el ADC y escanea redes WiFi. No necesita nada conectado.</div>
+</div>
+
+<div class="box peligro">
+  <div class="titulo"><span class="ico peligro">!</span> El paso que todos se saltean — leelo antes de empezar</div>
+  <p>Esta placa <b>no tiene chip USB-serie</b>. El puerto lo hace el propio ESP32-C3, y en el IDE de Arduino la opción <b><span class="mono">USB CDC On Boot</span> viene en <i>Disabled</i></b> por defecto. Con eso apagado <b>el Monitor Serie queda completamente vacío</b> aunque el programa esté corriendo perfecto. Si no lo activás, vas a pensar que la placa está fallada.</p>
+</div>
+
+<h2><span class="n">1</span> Configuración del IDE</h2>
+
+<table>
+  <thead><tr><th style="width:36%">Opción en <span class="mono">Herramientas</span></th><th style="width:30%">Valor</th><th style="width:34%">Por qué</th></tr></thead>
+  <tbody>
+    <tr><td>Placa</td><td><b>ESP32C3 Dev Module</b></td><td>No existe una entrada «SuperMini» en el core oficial</td></tr>
+    <tr style="background:#fff9ec"><td><b>USB CDC On Boot</b></td><td><b style="color:#a52a2a">Enabled</b></td><td><b>Crítico.</b> Sin esto no hay Monitor Serie</td></tr>
+    <tr><td>Flash Size</td><td>4MB (32Mb)</td><td>Es lo que trae el ESP32-C3FN4</td></tr>
+    <tr><td>Puerto</td><td>el que aparezca al enchufar</td><td>—</td></tr>
+  </tbody>
+</table>
+
+<h2><span class="n">2</span> Instalación</h2>
+
+<div class="grid g2">
+  <div class="card" style="border-left:4px solid #1baf7a">
+    <div class="k">Librerías</div>
+    <div class="v" style="font-size:13px">Ninguna</div>
+    <p><span class="mono">WiFi.h</span> viene con el core de ESP32.</p>
+  </div>
+  <div class="card" style="border-left:4px solid #1baf7a">
+    <div class="k">Driver USB</div>
+    <div class="v" style="font-size:13px">Ninguno</div>
+    <p>Usa el USB nativo del chip: el sistema la reconoce sola.</p>
+  </div>
+</div>
+
+<p>Lo único que necesitás es el <b>soporte de placas ESP32</b>:</p>
+<table class="t-compacta">
+  <tbody>
+    <tr><td class="num" style="width:8%"><b>1</b></td><td><span class="mono">Archivo → Preferencias → URLs adicionales de gestor de tarjetas</span>, pegá:<br><span class="mono">https://espressif.github.io/arduino-esp32/package_esp32_index.json</span></td></tr>
+    <tr><td class="num"><b>2</b></td><td><span class="mono">Herramientas → Placa → Gestor de tarjetas</span>, buscá <b>esp32</b> (de Espressif Systems) e instalá.</td></tr>
+  </tbody>
+</table>
+
+<h2><span class="n">3</span> Pasos</h2>
+
+<table class="t-compacta">
+  <thead><tr><th style="width:8%">#</th><th style="width:92%">Qué hacer</th></tr></thead>
+  <tbody>
+    <tr><td class="num"><b>1</b></td><td>Enchufá la placa por USB-C.</td></tr>
+    <tr><td class="num"><b>2</b></td><td>Abrí <span class="mono">esp32c3_supermini_test.ino</span>.</td></tr>
+    <tr><td class="num"><b>3</b></td><td>Configurá <span class="mono">Herramientas</span> según la tabla de la sección 1. <b>Acordate del CDC.</b></td></tr>
+    <tr><td class="num"><b>4</b></td><td>Elegí el puerto y subí.</td></tr>
+    <tr><td class="num"><b>5</b></td><td>Abrí el Monitor Serie a <b>115200 baudios</b>.</td></tr>
+  </tbody>
+</table>
+
+<h3>Salida esperada</h3>
+<pre class="mono" style="background:#171716;color:#e1e0d9;padding:11px 13px;border-radius:8px;font-size:9.6px;margin:6px 0;line-height:1.55">=== ESP32-C3 SuperMini ===
+Chip:      ESP32-C3
+Revision:  4
+CPU:       160 MHz
+Flash:     4 MB
+RAM libre: 318000 bytes
+MAC:       A0:B7:65:__:__:__
+
+Escaneando WiFi...
+  5 redes:
+   MiRed  -62 dBm
+
+ADC GPIO0: 1843  (1.48 V aprox)</pre>
+<p>Y el LED azul parpadeando una vez por segundo.</p>
+
+<h2><span class="n">4</span> Si no aparece el puerto o no sube</h2>
+
+<figure>
+<svg viewBox="0 0 700 150" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Secuencia de botones para entrar en modo descarga manual">
+  <g text-anchor="middle">
+    <rect x="30" y="30" width="140" height="62" rx="9" fill="#2a78d6"/>
+    <text x="100" y="55" font-size="11" font-weight="700" fill="#fff">1 · Mantené</text>
+    <text x="100" y="74" font-size="14" font-weight="700" fill="#fff">BOOT</text>
+
+    <path d="M 180 61 L 212 61" stroke="#898781" stroke-width="3" marker-end="url(#a1)"/>
+
+    <rect x="222" y="30" width="176" height="62" rx="9" fill="#2a78d6"/>
+    <text x="310" y="55" font-size="11" font-weight="700" fill="#fff">2 · Apretá y soltá</text>
+    <text x="310" y="74" font-size="14" font-weight="700" fill="#fff">RESET</text>
+
+    <path d="M 408 61 L 440 61" stroke="#898781" stroke-width="3" marker-end="url(#a1)"/>
+
+    <rect x="450" y="30" width="140" height="62" rx="9" fill="#2a78d6"/>
+    <text x="520" y="55" font-size="11" font-weight="700" fill="#fff">3 · Soltá</text>
+    <text x="520" y="74" font-size="14" font-weight="700" fill="#fff">BOOT</text>
+
+    <path d="M 600 61 L 632 61" stroke="#898781" stroke-width="3" marker-end="url(#a1)"/>
+    <rect x="626" y="38" width="62" height="46" rx="8" fill="#0ca30c"/>
+    <text x="657" y="58" font-size="9" font-weight="700" fill="#fff">puerto</text>
+    <text x="657" y="72" font-size="9" font-weight="700" fill="#fff">listo</text>
+  </g>
+  <defs><marker id="a1" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="#898781"/></marker></defs>
+  <text x="350" y="120" font-size="9.2" fill="#52514e" text-anchor="middle">Subí el programa y después apretá RESET para que corra.</text>
+  <text x="350" y="136" font-size="8.6" fill="#898781" text-anchor="middle">Funciona porque GPIO9 en bajo durante el reset selecciona Download Boot (ESP32-C3 Datasheet V1.0, Tabla 4).</text>
+</svg>
+</figure>
+
+<h2><span class="n">5</span> Errores comunes</h2>
+
+<table class="t-compacta">
+  <thead><tr><th style="width:30%">Síntoma</th><th style="width:35%">Causa</th><th style="width:35%">Solución</th></tr></thead>
+  <tbody>
+    <tr style="background:#fff9ec"><td><b>Monitor Serie vacío pero el LED parpadea</b></td><td><span class="mono">USB CDC On Boot</span> en <i>Disabled</i></td><td><b>Ponelo en Enabled</b> y volvé a subir. Es la causa más común, lejos</td></tr>
+    <tr><td>No aparece ningún puerto</td><td>Cable USB-C de sólo carga</td><td>Probá otro cable: muchos baratos no llevan las líneas de datos</td></tr>
+    <tr><td>No aparece ningún puerto</td><td>La placa quedó en un estado raro</td><td>Modo descarga manual (sección 4)</td></tr>
+    <tr><td>El puerto aparece y desaparece</td><td>Alimentación insuficiente</td><td>Puerto USB directo de la PC, no un hub sin alimentación</td></tr>
+    <tr><td><span class="mono">Failed to connect</span></td><td>No entró en modo descarga</td><td>Modo descarga manual (sección 4)</td></tr>
+    <tr><td>Se resetea al conectar WiFi</td><td>Fuente floja: pide picos de 500 mA</td><td>USB directo o fuente que dé de sobra</td></tr>
+    <tr><td>Muy pocas redes en el escaneo</td><td>La antena de esta placa es floja de fábrica</td><td>Defecto conocido del diseño. Acercate al router o buscá la versión «Plus»</td></tr>
+    <tr><td>El LED no prende</td><td>Lógica invertida</td><td><span class="mono">digitalWrite(8, LOW)</span> enciende; <span class="mono">HIGH</span> apaga</td></tr>
+    <tr><td><span class="mono">LED_BUILTIN</span> no funciona</td><td>En la variante genérica apunta al LED RGB del DevKitM</td><td>Usá el número <span class="mono">8</span> directo, como hace el ejemplo</td></tr>
+    <tr><td>No arranca con algo conectado</td><td>GPIO9 forzado a bajo en el arranque</td><td>Sacá lo que esté colgado de GPIO9 (o GPIO2 / GPIO8) y reseteá</td></tr>
+    <tr><td><span class="mono">analogRead()</span> da basura con WiFi</td><td>Usaste GPIO5, que es ADC2</td><td>ADC2 no funciona con WiFi. Usá GPIO0–GPIO4 (ADC1)</td></tr>
+  </tbody>
+</table>
+
+<h2><span class="n">6</span> Referencia de pines</h2>
+
+<p>Para cuando le conectes algo:</p>
+
+<table class="t-compacta">
+  <thead><tr><th style="width:16%">Etiqueta</th><th style="width:16%">GPIO</th><th style="width:68%">Para qué sirve</th></tr></thead>
+  <tbody>
+    <tr><td><span class="tag pwr">5V</span></td><td>—</td><td>Entrada 5 V al regulador. <b>No la uses con el USB enchufado</b></td></tr>
+    <tr><td><span class="tag gnd">G</span></td><td>—</td><td>Masa</td></tr>
+    <tr><td><span class="tag pwr">3V3</span></td><td>—</td><td>Salida 3,3 V del regulador</td></tr>
+    <tr><td>0</td><td class="num">GPIO0</td><td>ADC1_CH0 — es el que lee este ejemplo</td></tr>
+    <tr><td>1</td><td class="num">GPIO1</td><td>ADC1_CH1</td></tr>
+    <tr><td>2</td><td class="num">GPIO2</td><td>ADC1_CH2 · <b>strapping</b></td></tr>
+    <tr><td>3</td><td class="num">GPIO3</td><td>ADC1_CH3</td></tr>
+    <tr><td>4</td><td class="num">GPIO4</td><td>ADC1_CH4 · SCK</td></tr>
+    <tr><td>5</td><td class="num">GPIO5</td><td>ADC2_CH0 · MISO — <b>ADC2 no anda con WiFi</b></td></tr>
+    <tr><td>6</td><td class="num">GPIO6</td><td>MOSI</td></tr>
+    <tr><td>7</td><td class="num">GPIO7</td><td>SS</td></tr>
+    <tr><td>8</td><td class="num">GPIO8</td><td>SDA por defecto · <b>LED azul</b> · strapping</td></tr>
+    <tr><td>9</td><td class="num">GPIO9</td><td>SCL por defecto · <b>botón BOOT</b> · strapping</td></tr>
+    <tr><td>10</td><td class="num">GPIO10</td><td>GPIO libre</td></tr>
+    <tr><td>21</td><td class="num">GPIO21</td><td>UART0 TX</td></tr>
+    <tr><td>20</td><td class="num">GPIO20</td><td>UART0 RX</td></tr>
+  </tbody>
+</table>
+
+<div class="box ojo">
+  <div class="titulo"><span class="ico ojo">!</span> Para I²C, no uses los pines por defecto</div>
+  <p>El core define <span class="mono">SDA = 8</span> y <span class="mono">SCL = 9</span>, pero GPIO8 tiene el LED y GPIO9 el botón BOOT, y los dos son de strapping. Movelos con una línea: <b><span class="mono">Wire.begin(5, 6);</span></b></p>
+</div>
+
+</body>
+</html>
