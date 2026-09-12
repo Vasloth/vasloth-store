@@ -2,136 +2,33 @@
 <html lang="es">
 <head>
 <meta charset="utf-8">
-<title>GY-53 (VL53L0X) — Guía de software</title>
+<title>VL53L0X — Guía de software</title>
 <link rel="stylesheet" href="estilo.css">
 </head>
 <body>
 
 <div class="pie">
   <span><b>VASLOTH STORE</b> · Guía de software</span>
-  <span>GY-53 (VL53L0X) + ESP32</span>
+  <span>VL53L0X (4 pines, I²C) + ESP32 — <span class="mono">vl53l0x_i2c_esp32.ino</span></span>
 </div>
 
 <div class="hero">
   <div class="marca">Vasloth Store · Guía de software</div>
-  <h1>GY-53 + ESP32</h1>
-  <div class="sub">El GY-53 trae microcontrolador propio y arranca en <b>modo serie</b>: te manda la distancia en milímetros, ya calculada, sin librería. Esa es la forma recomendada y la que cubre esta guía primero. El modo I²C queda como alternativa.</div>
+  <h1>VL53L0X + ESP32</h1>
+  <div class="sub">Cómo hacer andar el programa de ejemplo <span class="mono" style="background:rgba(255,255,255,.14);color:#fff;border-color:transparent">vl53l0x_i2c_esp32.ino</span> con el módulo de 4 pines: conexión, librería, pasos y los errores que te vas a comer.</div>
 </div>
 
-<figure>
-<svg viewBox="0 0 700 130" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Los dos programas disponibles y cuál usar">
-  <rect x="14" y="14" width="330" height="100" rx="9" fill="#f1faf1" stroke="#0ca30c" stroke-width="1.8"/>
-  <text x="34" y="38" font-size="12" font-weight="700" fill="#076b07">Empezá por acá</text>
-  <text x="34" y="58" font-size="9.4" fill="#0b0b0b">Modo serie · PS sin conectar · sin librería</text>
-  <rect x="34" y="70" width="290" height="30" rx="6" fill="#0ca30c"/>
-  <text x="179" y="90" font-size="10.5" font-weight="700" fill="#fff" text-anchor="middle" font-family="Consolas, monospace">gy53_uart_esp32.ino</text>
+<h2><span class="n">1</span> Conexión</h2>
 
-  <rect x="356" y="14" width="330" height="100" rx="9" fill="#f9f9f7" stroke="#c3c2b7" stroke-width="1.5"/>
-  <text x="376" y="38" font-size="12" font-weight="700" fill="#52514e">Alternativa</text>
-  <text x="376" y="58" font-size="9.4" fill="#0b0b0b">Modo I²C · PS a GND · necesita librería</text>
-  <rect x="376" y="70" width="290" height="30" rx="6" fill="#52514e"/>
-  <text x="521" y="90" font-size="10.5" font-weight="700" fill="#fff" text-anchor="middle" font-family="Consolas, monospace">vl53l0x_i2c_esp32.ino</text>
-</svg>
-<figcaption>Usá el modo I²C sólo si tu proyecto ya tiene un bus I²C armado y no querés gastar un puerto serie, o si necesitás control fino del sensor (perfiles, calibración de cross-talk).</figcaption>
-</figure>
-
-<h2><span class="n">1</span> Modo serie — <span class="mono" style="font-size:.82em">gy53_uart_esp32.ino</span></h2>
-
-<h3>Conexión al ESP32 clásico</h3>
-<table>
-  <thead><tr><th style="width:20%">GY-53</th><th style="width:22%">ESP32</th><th style="width:58%">Nota</th></tr></thead>
-  <tbody>
-    <tr><td><b>VCC</b> (pin 1 o 12)</td><td><span class="tag pwr">3V3 o 5V</span></td><td>El módulo acepta 3–5 V (manual V1.0)</td></tr>
-    <tr><td><b>GND</b> (pin 2 o 11)</td><td><span class="tag gnd">GND</span></td><td>—</td></tr>
-    <tr><td><b>TX</b> (pin 3)</td><td><span class="tag i2c">GPIO16</span></td><td>TX del módulo va al <b>RX</b> del ESP32</td></tr>
-    <tr><td><b>RX</b> (pin 4)</td><td><span class="tag i2c">GPIO17</span></td><td>RX del módulo va al <b>TX</b> del ESP32</td></tr>
-    <tr style="background:#fff9ec"><td><b>PS</b> (pin 6)</td><td><b>sin conectar</b></td><td>Queda en alto = modo serie. <b>No lo toques.</b></td></tr>
-    <tr><td>PWM (pin 5)</td><td>—</td><td>Opcional, si querés leerlo sin puerto serie</td></tr>
-  </tbody>
-</table>
-
-<figure>
-<svg viewBox="0 0 700 150" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="TX del módulo va al RX del ESP32 y viceversa">
-  <rect x="40" y="34" width="150" height="86" rx="9" fill="#171716"/>
-  <text x="115" y="56" font-size="11" font-weight="700" fill="#fff" text-anchor="middle">ESP32</text>
-  <rect x="160" y="66" width="52" height="18" rx="3" fill="#2a78d6"/><text x="186" y="79" font-size="8.6" font-weight="700" fill="#fff" text-anchor="middle">GPIO16</text>
-  <rect x="160" y="92" width="52" height="18" rx="3" fill="#1baf7a"/><text x="186" y="105" font-size="8.6" font-weight="700" fill="#fff" text-anchor="middle">GPIO17</text>
-  <text x="150" y="79" font-size="8" fill="#c3c2b7" text-anchor="end">RX</text>
-  <text x="150" y="105" font-size="8" fill="#c3c2b7" text-anchor="end">TX</text>
-
-  <rect x="510" y="34" width="150" height="86" rx="9" fill="#1d3a6b"/>
-  <text x="585" y="56" font-size="11" font-weight="700" fill="#fff" text-anchor="middle">GY-53</text>
-  <rect x="488" y="66" width="52" height="18" rx="3" fill="#2a78d6"/><text x="514" y="79" font-size="8.6" font-weight="700" fill="#fff" text-anchor="middle">TX</text>
-  <rect x="488" y="92" width="52" height="18" rx="3" fill="#1baf7a"/><text x="514" y="105" font-size="8.6" font-weight="700" fill="#fff" text-anchor="middle">RX</text>
-
-  <path d="M 212 75 L 488 75" stroke="#2a78d6" stroke-width="3.5"/>
-  <path d="M 212 101 L 488 101" stroke="#1baf7a" stroke-width="3.5"/>
-  <text x="350" y="69" font-size="9" font-weight="700" fill="#1a5aa8" text-anchor="middle">TX del módulo → RX del ESP32</text>
-  <text x="350" y="118" font-size="9" font-weight="700" fill="#0e7a54" text-anchor="middle">RX del módulo ← TX del ESP32</text>
-
-  <rect x="230" y="128" width="240" height="18" rx="4" fill="#fdf2f2"/>
-  <text x="350" y="141" font-size="9" font-weight="700" fill="#a52a2a" text-anchor="middle">Van cruzados. Es el error más común.</text>
-</svg>
-</figure>
-
-<p>En el <b>ESP32-C3 SuperMini</b> cambiá <span class="mono">PIN_RX</span> y <span class="mono">PIN_TX</span> por pines libres (por ejemplo 3 y 4): el C3 tampoco tiene pines de UART fijos.</p>
-
-<div class="card" style="border-left:4px solid #1baf7a">
-  <div class="k">Librería necesaria</div>
-  <div class="v" style="font-size:13px">Ninguna</div>
-  <p>El STM32 del módulo hace las cuentas. El programa sólo arma la trama de 8 bytes y verifica el checksum.</p>
-</div>
-
-<h3>Pasos</h3>
-<table class="t-compacta">
-  <tbody>
-    <tr style="background:#fff9ec"><td class="num" style="width:8%"><b>0</b></td><td><b>Sacá la película protectora</b> que viene pegada sobre la ventana del sensor. Es transparente y fácil de no ver; con ella puesta no mide.</td></tr>
-    <tr><td class="num"><b>1</b></td><td>Instalá el soporte de placas ESP32 si no lo tenés: <span class="mono">Archivo → Preferencias → URLs adicionales</span> → <span class="mono">https://espressif.github.io/arduino-esp32/package_esp32_index.json</span>, después <span class="mono">Gestor de tarjetas</span> → «esp32» → instalar.</td></tr>
-    <tr><td class="num"><b>2</b></td><td>Cableá según la tabla, con PS <b>sin conectar</b>.</td></tr>
-    <tr><td class="num"><b>3</b></td><td>Abrí <span class="mono">gy53_uart_esp32.ino</span> y subilo.</td></tr>
-    <tr><td class="num"><b>4</b></td><td>Abrí el Monitor Serie a <b>115200</b>. <span style="color:#52514e">(El módulo habla a 9600, pero el monitor va a 115200: son dos puertos distintos.)</span></td></tr>
-  </tbody>
-</table>
-
-<pre class="mono" style="background:#171716;color:#e1e0d9;padding:11px 13px;border-radius:8px;font-size:9.6px;margin:6px 0;line-height:1.55">GY-53 en modo serie. Esperando datos...
-1077 mm  (107.7 cm)  modo=alta precision
-1078 mm  (107.8 cm)  modo=alta precision</pre>
-
-<h3>Cambiar el modo de medición</h3>
-<p>En <span class="mono">setup()</span> hay cuatro líneas, una por modo. Descomentá la que quieras:</p>
-<table class="t-compacta">
-  <thead><tr><th style="width:34%">Línea</th><th style="width:22%">Rango</th><th style="width:18%">Tiempo</th><th style="width:26%">Precisión</th></tr></thead>
-  <tbody>
-    <tr><td class="mono">enviarComando(0x50)</td><td class="num">0 – 2 m</td><td class="num">35 ms</td><td class="num">±4 cm</td></tr>
-    <tr><td class="mono">enviarComando(0x51)</td><td class="num">0 – 1,2 m</td><td class="num">22 ms</td><td class="num">±3 cm</td></tr>
-    <tr style="background:#f1faf1"><td class="mono">enviarComando(0x52)</td><td class="num">0 – 1,2 m</td><td class="num">200 ms</td><td class="num">±1 cm — de fábrica</td></tr>
-    <tr><td class="mono">enviarComando(0x53)</td><td class="num">0 – 1,2 m</td><td class="num">35 ms</td><td class="num">±2 cm</td></tr>
-  </tbody>
-</table>
-
-<div class="box ojo">
-  <div class="titulo"><span class="ico ojo">!</span> Guardá la configuración o se pierde al apagar</div>
-  <p>Los comandos de modo y de baudios son volátiles. Para fijarlos: descomentá <span class="mono">enviarComando(0x25);</span> en <span class="mono">setup()</span>, subí <b>una sola vez</b>, y volvé a comentarlo. Si lo dejás descomentado, escribís la memoria del módulo en cada arranque sin necesidad.</p>
-</div>
-
-<h2 class="salto" id="s2"><span class="n">2</span> Modo I²C — <span class="mono" style="font-size:.82em">vl53l0x_i2c_esp32.ino</span></h2>
-
-<div class="box dato">
-  <div class="titulo"><span class="ico dato">i</span> Para usar I²C hay que poner PS a GND</div>
-  <p>Con PS a masa, el STM32 del módulo se desentiende y le hablás al chip VL53L0X directamente. <b>En este modo el PWM deja de funcionar</b> y necesitás librería.</p>
-</div>
-
-<h3>Conexión</h3>
 <div class="grid g2">
   <div class="card">
     <div class="k">ESP32 clásico (DevKit CH340C)</div>
     <table class="t-compacta" style="margin:4px 0 0">
       <tbody>
-        <tr><td style="width:44%">VCC</td><td><span class="tag pwr">3V3</span></td></tr>
-        <tr><td>GND</td><td><span class="tag gnd">GND</span></td></tr>
-        <tr><td>SDA (pin 9)</td><td><span class="tag i2c">GPIO21</span></td></tr>
-        <tr><td>SCL (pin 10)</td><td><span class="tag i2c">GPIO22</span></td></tr>
-        <tr><td><b>PS</b> (pin 6)</td><td><b>a GND</b></td></tr>
+        <tr><td style="width:40%"><span class="tag pwr">VIN</span></td><td><b>3V3</b></td></tr>
+        <tr><td><span class="tag gnd">GND</span></td><td>GND</td></tr>
+        <tr><td><span class="tag i2c">SCL</span></td><td>GPIO22</td></tr>
+        <tr><td><span class="tag i2c">SDA</span></td><td>GPIO21</td></tr>
       </tbody>
     </table>
   </div>
@@ -139,70 +36,133 @@
     <div class="k">ESP32-C3 SuperMini</div>
     <table class="t-compacta" style="margin:4px 0 0">
       <tbody>
-        <tr><td style="width:44%">VCC</td><td><span class="tag pwr">3V3</span></td></tr>
-        <tr><td>GND</td><td><span class="tag gnd">G</span></td></tr>
-        <tr><td>SDA (pin 9)</td><td><span class="tag i2c">GPIO5</span></td></tr>
-        <tr><td>SCL (pin 10)</td><td><span class="tag i2c">GPIO6</span></td></tr>
-        <tr><td><b>PS</b> (pin 6)</td><td><b>a GND</b></td></tr>
+        <tr><td style="width:40%"><span class="tag pwr">VIN</span></td><td><b>3V3</b></td></tr>
+        <tr><td><span class="tag gnd">GND</span></td><td>G</td></tr>
+        <tr><td><span class="tag i2c">SCL</span></td><td>GPIO6</td></tr>
+        <tr><td><span class="tag i2c">SDA</span></td><td>GPIO5</td></tr>
       </tbody>
     </table>
     <p style="margin-top:5px"><b>No uses GPIO8 y GPIO9</b>: tienen el LED y el botón BOOT.</p>
   </div>
 </div>
 
-<h3>Librería</h3>
-<div class="card" style="border-left:4px solid #2a78d6">
-  <div class="k">VL53L0X de Pololu</div>
-  <p><b>Arduino IDE:</b> <span class="mono">Programa → Incluir librería → Administrar bibliotecas…</span>, buscá <b>VL53L0X</b> y elegí la de <b>Pololu</b>.<br>
-  <b>PlatformIO:</b> <span class="mono">lib_deps = pololu/VL53L0X</span></p>
-  <p>Si preferís la de Adafruit (<span class="mono">Adafruit_VL53L0X</span>) también sirve, pero la API es distinta y este código no compila con ella.</p>
+<figure>
+<svg viewBox="0 0 700 220" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Esquema de conexión del VL53L0X de 4 pines a un ESP32 por I2C">
+  <!-- ESP32 -->
+  <rect x="30" y="30" width="150" height="160" rx="9" fill="#171716"/>
+  <text x="105" y="52" font-size="12" font-weight="700" fill="#fff" text-anchor="middle">ESP32</text>
+  <rect x="150" y="66"  width="46" height="19" rx="3" fill="#eb6834"/><text x="173" y="79.5" font-size="9" font-weight="700" fill="#fff" text-anchor="middle">3V3</text>
+  <rect x="150" y="98"  width="46" height="19" rx="3" fill="#52514e"/><text x="173" y="111.5" font-size="9" font-weight="700" fill="#fff" text-anchor="middle">GND</text>
+  <rect x="150" y="130" width="46" height="19" rx="3" fill="#2a78d6"/><text x="173" y="143.5" font-size="9" font-weight="700" fill="#fff" text-anchor="middle">GPIO22</text>
+  <rect x="150" y="162" width="46" height="19" rx="3" fill="#2a78d6"/><text x="173" y="175.5" font-size="9" font-weight="700" fill="#fff" text-anchor="middle">GPIO21</text>
+
+  <!-- VL53L0X -->
+  <rect x="530" y="30" width="140" height="160" rx="9" fill="#3d2a1f"/>
+  <text x="600" y="52" font-size="11" font-weight="700" fill="#fff" text-anchor="middle">VL53L0X</text>
+  <rect x="514" y="66"  width="46" height="19" rx="3" fill="#eb6834"/><text x="537" y="79.5" font-size="9" font-weight="700" fill="#fff" text-anchor="middle">VIN</text>
+  <rect x="514" y="98"  width="46" height="19" rx="3" fill="#52514e"/><text x="537" y="111.5" font-size="9" font-weight="700" fill="#fff" text-anchor="middle">GND</text>
+  <rect x="514" y="130" width="46" height="19" rx="3" fill="#2a78d6"/><text x="537" y="143.5" font-size="9" font-weight="700" fill="#fff" text-anchor="middle">SCL</text>
+  <rect x="514" y="162" width="46" height="19" rx="3" fill="#2a78d6"/><text x="537" y="175.5" font-size="9" font-weight="700" fill="#fff" text-anchor="middle">SDA</text>
+
+  <!-- cables -->
+  <line x1="196" y1="75.5"  x2="514" y2="75.5"  stroke="#eb6834" stroke-width="3.5"/>
+  <line x1="196" y1="107.5" x2="514" y2="107.5" stroke="#898781" stroke-width="3.5"/>
+  <line x1="196" y1="139.5" x2="514" y2="139.5" stroke="#2a78d6" stroke-width="3.5"/>
+  <line x1="196" y1="171.5" x2="514" y2="171.5" stroke="#2a78d6" stroke-width="3.5"/>
+
+  <text x="355" y="69"  font-size="8.4" fill="#b8471c" font-weight="600" text-anchor="middle">3,3 V — no 5 V</text>
+  <text x="355" y="133" font-size="8.4" fill="#1a5aa8" font-weight="600" text-anchor="middle">reloj</text>
+  <text x="355" y="165" font-size="8.4" fill="#1a5aa8" font-weight="600" text-anchor="middle">datos</text>
+
+  <text x="350" y="212" font-size="8.8" fill="#52514e" text-anchor="middle">Cuatro cables, ninguna resistencia externa: el módulo ya trae los pull-ups de I²C.</text>
+</svg>
+</figure>
+
+<div class="box peligro">
+  <div class="titulo"><span class="ico peligro">!</span> Alimentalo con 3,3 V, no con 5 V</div>
+  <p>El chip VL53L0X trabaja a <b>2,8 V</b> (Datasheet Rev 2, Tabla 7). Muchas de estas placas traen regulador y aceptan 5 V en VIN, pero <b>no todas adaptan los niveles de SDA/SCL</b> — y con 5 V podrías estar metiéndole 5 V a las líneas del chip. Con 3,3 V andan todas y no arriesgás nada. Por el mismo motivo, este módulo se lleva mejor con micros de 3,3 V (ESP32, ESP8266) que con un Arduino UNO de 5 V.</p>
 </div>
 
-<h3>Ajustar el modo</h3>
+<h2><span class="n">2</span> Librería</h2>
+
+<div class="card" style="border-left:4px solid #2a78d6">
+  <div class="k">VL53L0X de Pololu</div>
+  <p><b>Arduino IDE:</b> <span class="mono">Programa → Incluir librería → Administrar bibliotecas…</span>, buscá <b>VL53L0X</b> y elegí la de <b>Pololu</b>. Instalar.<br>
+  <b>PlatformIO:</b> <span class="mono">lib_deps = pololu/VL53L0X</span></p>
+  <p>Es liviana, no depende de nada más y habla directamente por I²C con el chip. Si preferís la de Adafruit (<span class="mono">Adafruit_VL53L0X</span>) también sirve y hace lo mismo, pero la API es distinta y este código no compila con ella.</p>
+</div>
+
+<h2><span class="n">3</span> Pasos</h2>
+
 <table class="t-compacta">
-  <thead><tr><th style="width:52%">Línea en <span class="mono">setup()</span></th><th style="width:48%">Qué hace</th></tr></thead>
+  <thead><tr><th style="width:8%">#</th><th style="width:92%">Qué hacer</th></tr></thead>
   <tbody>
-    <tr><td class="mono">setMeasurementTimingBudget(33000)</td><td>33 ms — por defecto</td></tr>
+    <tr style="background:#fff9ec"><td class="num"><b>0</b></td><td>Mirá la ventana del sensor: si tiene una <b>película protectora</b> pegada, sacala. No todos los lotes la traen, pero con ella puesta no mide.</td></tr>
+    <tr><td class="num"><b>1</b></td><td>Instalá el soporte de placas ESP32 si no lo tenés: <span class="mono">Archivo → Preferencias → URLs adicionales</span> → <span class="mono">https://espressif.github.io/arduino-esp32/package_esp32_index.json</span>, después <span class="mono">Gestor de tarjetas</span> → «esp32» → instalar.</td></tr>
+    <tr><td class="num"><b>2</b></td><td>Instalá la librería <b>VL53L0X de Pololu</b> (sección 2).</td></tr>
+    <tr><td class="num"><b>3</b></td><td>Cableá según la tabla, con VIN a <b>3,3 V</b>.</td></tr>
+    <tr><td class="num"><b>4</b></td><td>Abrí <span class="mono">vl53l0x_i2c_esp32.ino</span>. Si usás el C3 SuperMini, comentá el par de <span class="mono">#define</span> del ESP32 clásico y descomentá el del C3.</td></tr>
+    <tr><td class="num"><b>5</b></td><td>Elegí placa y puerto. <b>En el C3 SuperMini acordate de <span class="mono">USB CDC On Boot: Enabled</span>.</b></td></tr>
+    <tr><td class="num"><b>6</b></td><td>Subí y abrí el Monitor Serie a <b>115200</b>.</td></tr>
+  </tbody>
+</table>
+
+<h3>Salida esperada</h3>
+<pre class="mono" style="background:#171716;color:#e1e0d9;padding:11px 13px;border-radius:8px;font-size:9.6px;margin:6px 0;line-height:1.55">VL53L0X listo.
+243 mm  (24.3 cm)
+244 mm  (24.4 cm)
+Fuera de rango</pre>
+
+<h3>Ajustar el perfil de medición</h3>
+<p>En <span class="mono">setup()</span>, cambiá el presupuesto de tiempo:</p>
+<table class="t-compacta">
+  <thead><tr><th style="width:52%">Línea</th><th style="width:48%">Qué hace</th></tr></thead>
+  <tbody>
+    <tr style="background:#f1faf1"><td class="mono">setMeasurementTimingBudget(33000)</td><td>33 ms — por defecto, uso general</td></tr>
     <tr><td class="mono">setMeasurementTimingBudget(200000)</td><td>200 ms — alta precisión (±3 %)</td></tr>
     <tr><td class="mono">setMeasurementTimingBudget(20000)</td><td>20 ms — rápido (±5 %)</td></tr>
   </tbody>
 </table>
+<p>Para el perfil <b>long range</b> (2 m, sólo a oscuras) hacen falta tres líneas más; están comentadas en el programa, descomentalas.</p>
 
-<h2><span class="n">3</span> Errores comunes</h2>
+<h2 class="salto" id="s4"><span class="n">4</span> Errores comunes</h2>
 
 <table class="t-compacta">
   <thead><tr><th style="width:28%">Síntoma</th><th style="width:36%">Causa</th><th style="width:36%">Solución</th></tr></thead>
   <tbody>
-    <tr style="background:#fff9ec"><td rowspan="3"><b>Serie muda</b> (modo UART)</td><td><b>TX y RX no cruzados</b></td><td>TX del módulo al <b>RX</b> del ESP32. Es el error más común</td></tr>
-    <tr><td>PS conectado a GND</td><td>Para modo serie, PS va <b>sin conectar</b></td></tr>
-    <tr><td>El módulo está a 115200</td><td>Cambiá <span class="mono">BAUDIOS</span> en el programa y probá</td></tr>
-    <tr><td><span class="mono">Checksum invalido</span> seguido</td><td>Baudios mal</td><td>Probá 115200 antes de dar el módulo por fallado</td></tr>
-    <tr><td rowspan="3"><span class="mono">No se detecta el VL53L0X</span> (modo I²C)</td><td><b>PS quedó al aire</b></td><td>Para I²C, <b>PS va a GND</b></td></tr>
+    <tr><td rowspan="4"><span class="mono">No se detecta el VL53L0X</span></td><td>Alimentación</td><td>Medí 3,3 V entre VIN y GND con el multímetro</td></tr>
     <tr><td>SDA y SCL cruzados</td><td>Dalos vuelta</td></tr>
     <tr><td>Pines I²C mal en el C3</td><td>Usá 5 y 6, no 8 y 9</td></tr>
+    <tr><td>Librería equivocada</td><td>Tiene que ser la <b>VL53L0X de Pololu</b>; la de Adafruit tiene otra API</td></tr>
     <tr><td>El escáner muestra <span class="mono">0x29</span> y no <span class="mono">0x52</span></td><td>No es un error</td><td><span class="mono">0x52</span> es de 8 bits, <span class="mono">0x29</span> de 7. Mismo sensor</td></tr>
-    <tr style="background:#fff9ec"><td><span class="mono">Fuera de rango</span> siempre, módulo nuevo</td><td><b>Película protectora puesta</b></td><td>Sacala de la ventana del sensor</td></tr>
+    <tr style="background:#fff9ec"><td><span class="mono">Fuera de rango</span> siempre, módulo nuevo</td><td>Película protectora puesta</td><td>Sacala de la ventana del sensor</td></tr>
     <tr><td><span class="mono">Fuera de rango</span> siempre</td><td>Nada que reflejar, u objeto muy lejos</td><td>Probá con una hoja blanca a 20 cm</td></tr>
     <tr style="background:#fdf2f2"><td><b><span class="mono">Fuera de rango</span> al aire libre</b></td><td><b>Luz solar.</b> El sol satura el sensor a 940 nm</td><td>Es física, no software. En exterior el alcance cae a 40–80 cm</td></tr>
     <tr><td>Lecturas erráticas</td><td>Objetivo oscuro, transparente o en ángulo</td><td>Vidrio, espejos, metal pulido y superficies inclinadas devuelven mal el pulso</td></tr>
     <tr><td>Lecturas erráticas</td><td>Fuente floja: pide picos de 40 mA</td><td>Cables cortos y buena fuente</td></tr>
     <tr><td>Mide menos de lo esperado</td><td>Objetivo gris u oscuro</td><td>Un objetivo al 17 % da 80 cm donde uno blanco da 2 m</td></tr>
     <tr><td>No mide detrás de un vidrio</td><td><i>Crosstalk</i> óptico</td><td>Requiere calibración de cross-talk (Rev 2, sección 2.3.3)</td></tr>
-    <tr><td>Se desconfigura al apagar</td><td>No guardaste</td><td>Mandá <span class="mono">0xA5 0x25 0xCA</span> una vez</td></tr>
+    <tr><td><span class="mono">TIMEOUT</span></td><td>Se cortó la comunicación</td><td>Cables flojos o alimentación intermitente</td></tr>
+    <tr><td>Anda con ESP32, no con Arduino UNO</td><td>El UNO es de 5 V; las líneas del módulo quedan a 2,8 V</td><td>Usá un micro de 3,3 V o un adaptador de niveles</td></tr>
     <tr><td>Falla en frío o mucho calor</td><td>Fuera del rango térmico</td><td>El chip es de <b>−20 a +70 °C</b></td></tr>
   </tbody>
 </table>
 
-<h2><span class="n">4</span> Varios sensores a la vez</h2>
+<h2><span class="n">5</span> Varios sensores a la vez</h2>
+
+<div class="box ojo">
+  <div class="titulo"><span class="ico ojo">!</span> Esta placa no tiene pin XSHUT: no se puede cambiar la dirección por software</div>
+  <p>Todos los VL53L0X arrancan en <span class="mono">0x29</span>. Con las placas que exponen XSHUT se apagan todos y se encienden de a uno para asignarles direcciones distintas. <b>Con la de 4 pines eso no es posible.</b> Dos caminos:</p>
+</div>
 
 <div class="grid g2">
   <div class="card" style="border-left:4px solid #0ca30c">
-    <div class="k">En modo serie — es fácil</div>
-    <p style="font-size:10px">Cada módulo va a un UART distinto del ESP32. El ESP32 clásico tiene <b>tres</b> puertos serie por hardware, así que podés colgar dos sensores sin hacer nada raro (uno queda para el USB).</p>
+    <div class="k">Multiplexor I²C TCA9548A</div>
+    <p style="font-size:10px">Una placa chica y barata con 8 canales. Cada sensor va a un canal; desde el código elegís el canal y leés. Es la solución limpia para 3 o más sensores.</p>
   </div>
-  <div class="card" style="border-left:4px solid #fab219">
-    <div class="k">En modo I²C — hay que trabajar</div>
-    <p style="font-size:10px">Todos arrancan en <span class="mono">0x29</span>. Hay que conectar el XSHUT de cada uno a un GPIO distinto, arrancarlos apagados, y encender de a uno cambiándole la dirección con <span class="mono">sensor.setAddress()</span>.</p>
+  <div class="card" style="border-left:4px solid #2a78d6">
+    <div class="k">Un bus I²C por sensor</div>
+    <p style="font-size:10px">El ESP32 clásico tiene <b>dos</b> controladores I²C por hardware. Con <span class="mono">Wire</span> y <span class="mono">Wire1</span> en pines distintos, dos sensores salen sin agregar nada.</p>
   </div>
 </div>
 

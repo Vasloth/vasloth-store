@@ -2,157 +2,133 @@
 <html lang="es">
 <head>
 <meta charset="utf-8">
-<title>GY-53 (VL53L0X) — Ficha técnica</title>
+<title>VL53L0X — Ficha técnica</title>
 <link rel="stylesheet" href="estilo.css">
 </head>
 <body>
 
 <div class="pie">
   <span><b>VASLOTH STORE</b> · Ficha técnica</span>
-  <span>GY-53 (VL53L0X) — Sensor láser de distancia por tiempo de vuelo</span>
+  <span>VL53L0X — Sensor láser de distancia por tiempo de vuelo · módulo I²C de 4 pines</span>
 </div>
 
 <div class="hero">
   <div class="marca">Vasloth Store · Ficha técnica</div>
-  <h1>GY-53 · VL53L0X</h1>
-  <div class="sub">Sensor que mide distancia cronometrando cuánto tarda un pulso de láser infrarrojo en ir, rebotar y volver. A diferencia de un infrarrojo común, la lectura <b>no depende del color del objeto</b>; a diferencia del ultrasónico, el haz es angosto y no lo molesta el ruido. El GY-53 le suma un microcontrolador propio que entrega la distancia <b>ya calculada</b>.</div>
+  <h1>VL53L0X</h1>
+  <div class="sub">Sensor que mide distancia cronometrando cuánto tarda un pulso de láser infrarrojo en ir, rebotar y volver. A diferencia de un infrarrojo común, la lectura <b>no depende del color del objeto</b>; a diferencia del ultrasónico, el haz es angosto y no lo molesta el ruido. Este módulo es el chip en una placa mínima de <b>4 pines, con comunicación I²C</b>.</div>
   <div class="chips">
     <span class="chip azul">Time-of-Flight</span>
     <span class="chip aqua">Hasta 2 m · 1 mm</span>
-    <span class="chip naranja">Serie + PWM + I²C</span>
+    <span class="chip naranja">I²C · 4 pines</span>
     <span class="chip">Láser 940 nm Clase 1</span>
-    <span class="chip">Sin librería</span>
+    <span class="chip">Librería Pololu</span>
   </div>
 </div>
 
 <div class="box ok">
-  <div class="titulo"><span class="ico ok">✓</span> Este módulo es el GY-53 — el que trae MCU propio</div>
-  <p>Circulan dos placas distintas con el nombre «VL53L0X módulo sensor serie PWM salida», y no son intercambiables. Esta es la <b>completa</b>: <b>12 pines</b>, con un <b>STM32</b> que hace las cuentas y te manda la distancia en milímetros por el puerto serie. <b>No necesitás ninguna librería.</b> La otra (GY-530 / GY-VL53L0XV2, de 4 a 6 pines) es sólo el chip pelado y obliga a usar librería.</p>
-  <p style="margin-top:5px"><b>Para reconocerlo de un vistazo:</b> tiene <b>12 pines</b> y dos chips en la placa: el cuadradito del sensor y, al lado, el microcontrolador.</p>
+  <div class="titulo"><span class="ico ok">✓</span> Cómo reconocer este módulo</div>
+  <p>Es la placa chica con <b>4 pines: VIN, GND, SCL, SDA</b>, y un solo chip (el cuadradito negro del sensor). Se comunica <b>directo por I²C</b> con tu microcontrolador y necesita una librería, que es gratis y se instala en un clic.</p>
+  <p style="margin-top:5px">Existe otro módulo con el mismo sensor, el <b>GY-53</b>, que tiene 12 pines y un microcontrolador extra que entrega la distancia por puerto serie o PWM. <b>No es este.</b> Si tu placa tiene 4 pines, esta ficha es la tuya.</p>
 </div>
 
 <div class="grid g2">
   <div class="card">
-    <div class="k">Alimentación del módulo</div>
-    <div class="v">3 – 5 <small>V</small></div>
-    <p>Consumo 25 mA. Trae regulador LDO propio: el chip interno trabaja a 2,8 V.</p>
+    <div class="k">Alimentación</div>
+    <div class="v">3,3 <small>V recomendado</small></div>
+    <p>El chip trabaja a 2,8 V. Con 3,3 V en VIN funciona en todas las versiones de esta placa.</p>
   </div>
   <div class="card">
-    <div class="k">Temperatura del chip</div>
+    <div class="k">Temperatura</div>
     <div class="v">−20 … +70 <small>°C</small></div>
     <p><b>Más angosta que casi todo.</b> No sirve para intemperie en verano ni freezer.</p>
   </div>
   <div class="card">
     <div class="k">Rango</div>
-    <div class="v">0 – 2 <small>m · resolución 1 mm</small></div>
-    <p>Respuesta de 22 ms como mínimo, según el modo.</p>
+    <div class="v">Hasta 2 <small>m · resolución 1 mm</small></div>
+    <p>Los 2 m son contra objetivo blanco en interior. Ver sección 3.</p>
   </div>
   <div class="card">
-    <div class="k">Tamaño</div>
-    <div class="v">25 × 15,6 <small>mm</small></div>
-    <p>Campo de visión de 25°.</p>
+    <div class="k">Dirección I²C</div>
+    <div class="v">0x29 <small>en 7 bits</small></div>
+    <p>El datasheet la escribe 0x52 (8 bits). Es el mismo sensor.</p>
   </div>
 </div>
 
-<h2><span class="n">1</span> Pinout — los 12 pines</h2>
+<h2><span class="n">1</span> Pinout — los 4 pines</h2>
 
 <figure>
-<svg viewBox="0 0 700 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Pinout del módulo GY-53 con sus 12 pines y el pin PS de selección de modo">
+<svg viewBox="0 0 700 250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Pinout del módulo VL53L0X de 4 pines: VIN, GND, SCL y SDA">
   <!-- placa -->
-  <rect x="140" y="30" width="420" height="120" rx="10" fill="#1d3a6b"/>
-  <rect x="172" y="56" width="52" height="52" rx="6" fill="#0b0b0b"/>
-  <text x="198" y="78" font-size="8.4" fill="#c3c2b7" text-anchor="middle">VL53L0X</text>
-  <text x="198" y="92" font-size="7.4" fill="#898781" text-anchor="middle">ToF</text>
-  <rect x="300" y="62" width="72" height="40" rx="5" fill="#111"/>
-  <text x="336" y="86" font-size="9" fill="#c3c2b7" text-anchor="middle">STM32</text>
-  <text x="470" y="80" font-size="9" fill="#8fa8cc" text-anchor="middle">GY-53</text>
-  <text x="470" y="94" font-size="7.6" fill="#6a86ab" text-anchor="middle">25 × 15,6 mm</text>
+  <rect x="220" y="30" width="260" height="120" rx="10" fill="#3d2a1f"/>
+  <rect x="316" y="52" width="68" height="60" rx="6" fill="#0b0b0b"/>
+  <rect x="330" y="66" width="18" height="18" rx="2" fill="#1a1a1a" stroke="#444" stroke-width="1"/>
+  <rect x="352" y="66" width="18" height="18" rx="2" fill="#1a1a1a" stroke="#444" stroke-width="1"/>
+  <text x="350" y="104" font-size="7.6" fill="#c3c2b7" text-anchor="middle">VL53L0X</text>
+  <text x="250" y="62" font-size="7.2" fill="#a8896f">LDO</text>
+  <rect x="244" y="66" width="22" height="14" rx="2" fill="#111"/>
+  <text x="440" y="80" font-size="8.6" fill="#a8896f" text-anchor="middle">I²C</text>
 
   <!-- pines -->
   <g fill="#c9a227">
-    <rect x="160" y="150" width="11" height="12"/><rect x="194" y="150" width="11" height="12"/>
-    <rect x="228" y="150" width="11" height="12"/><rect x="262" y="150" width="11" height="12"/>
-    <rect x="296" y="150" width="11" height="12"/><rect x="330" y="150" width="11" height="12"/>
-    <rect x="364" y="150" width="11" height="12"/><rect x="398" y="150" width="11" height="12"/>
-    <rect x="432" y="150" width="11" height="12"/><rect x="466" y="150" width="11" height="12"/>
-    <rect x="500" y="150" width="11" height="12"/><rect x="534" y="150" width="11" height="12"/>
+    <rect x="262" y="150" width="12" height="14"/>
+    <rect x="318" y="150" width="12" height="14"/>
+    <rect x="374" y="150" width="12" height="14"/>
+    <rect x="430" y="150" width="12" height="14"/>
   </g>
 
-  <!-- etiquetas verticales -->
-  <g font-size="9" font-weight="700" text-anchor="start">
-    <text x="169" y="178" transform="rotate(55 169 178)" fill="#b8471c">1 VCC</text>
-    <text x="203" y="178" transform="rotate(55 203 178)" fill="#52514e">2 GND</text>
-    <text x="237" y="178" transform="rotate(55 237 178)" fill="#1a5aa8">3 TX</text>
-    <text x="271" y="178" transform="rotate(55 271 178)" fill="#1a5aa8">4 RX</text>
-    <text x="305" y="178" transform="rotate(55 305 178)" fill="#0e7a54">5 PWM</text>
-    <text x="339" y="178" transform="rotate(55 339 178)" fill="#a52a2a">6 PS</text>
-    <text x="373" y="178" transform="rotate(55 373 178)" fill="#52514e">7 XSHUT</text>
-    <text x="407" y="178" transform="rotate(55 407 178)" fill="#52514e">8 GPIO1</text>
-    <text x="441" y="178" transform="rotate(55 441 178)" fill="#7a4bbd">9 SDA</text>
-    <text x="475" y="178" transform="rotate(55 475 178)" fill="#7a4bbd">10 SCL</text>
-    <text x="509" y="178" transform="rotate(55 509 178)" fill="#52514e">11 GND</text>
-    <text x="543" y="178" transform="rotate(55 543 178)" fill="#b8471c">12 VCC</text>
+  <!-- etiquetas -->
+  <g font-size="10.5" font-weight="700" text-anchor="middle">
+    <rect x="236" y="172" width="64" height="24" rx="4" fill="#eb6834"/><text x="268" y="189" fill="#fff">VIN</text>
+    <rect x="292" y="172" width="64" height="24" rx="4" fill="#52514e"/><text x="324" y="189" fill="#fff">GND</text>
+    <rect x="348" y="172" width="64" height="24" rx="4" fill="#2a78d6"/><text x="380" y="189" fill="#fff">SCL</text>
+    <rect x="404" y="172" width="64" height="24" rx="4" fill="#2a78d6"/><text x="436" y="189" fill="#fff">SDA</text>
+  </g>
+  <g font-size="8.4" fill="#52514e" text-anchor="middle">
+    <text x="268" y="212">alimentación</text>
+    <text x="324" y="212">masa</text>
+    <text x="380" y="212">reloj I²C</text>
+    <text x="436" y="212">datos I²C</text>
   </g>
 
-  <!-- destaque PS -->
-  <circle cx="335.5" cy="156" r="13" fill="none" stroke="#d03b3b" stroke-width="2.2"/>
-  <path d="M 335 240 L 335 172" stroke="#d03b3b" stroke-width="1.6" stroke-dasharray="4 3"/>
-  <rect x="150" y="244" width="400" height="46" rx="7" fill="#fdf2f2" stroke="#d03b3b" stroke-width="1.3"/>
-  <text x="350" y="261" font-size="10" font-weight="700" fill="#a52a2a" text-anchor="middle">El pin PS decide en qué modo trabaja el módulo</text>
-  <text x="350" y="275" font-size="8.8" fill="#a52a2a" text-anchor="middle">Sin conectar = modo serie (por defecto) · A GND = modo I²C directo al chip</text>
-  <text x="350" y="286" font-size="8.8" fill="#a52a2a" text-anchor="middle">Es lo primero que hay que mirar si «no anda».</text>
+  <!-- leyenda -->
+  <text x="350" y="240" font-size="8.8" fill="#898781" text-anchor="middle">El orden de los pines puede variar según el fabricante: guiate siempre por la serigrafía de la placa.</text>
 </svg>
-<figcaption>Los pines <b>1 y 12</b> son ambos VCC, y el <b>2 y 11</b> ambos GND: están duplicados a propósito para que puedas encadenar la alimentación. <span style="color:#52514e">(Fuente: GY-53 Infrared ranging module manual V1.0, sección 5 «Pin description»)</span></figcaption>
+<figcaption>Cuatro pines y nada más. <b>No hay pin XSHUT ni GPIO1</b> en esta variante, lo que tiene una consecuencia práctica: no podés cambiarle la dirección I²C por software al arrancar, así que para usar varios en el mismo bus necesitás un multiplexor (ver sección 7). <span style="color:#52514e">(Fuente de las funciones de pin: ST VL53L0X Datasheet DocID029104 Rev 2, Tabla 2)</span></figcaption>
 </figure>
 
 <table class="t-compacta">
-  <thead><tr><th style="width:12%">Pin</th><th style="width:18%">Nombre</th><th style="width:70%">Función</th></tr></thead>
+  <thead><tr><th style="width:16%">Pin</th><th style="width:84%">Función</th></tr></thead>
   <tbody>
-    <tr><td class="num">1 y 12</td><td><span class="tag pwr">VCC</span></td><td>Alimentación 3–5 V (duplicado)</td></tr>
-    <tr><td class="num">2 y 11</td><td><span class="tag gnd">GND</span></td><td>Masa (duplicado)</td></tr>
-    <tr><td class="num">3</td><td><b>TX</b></td><td>Salida serie (TTL) — va al RX de tu micro</td></tr>
-    <tr><td class="num">4</td><td><b>RX</b></td><td>Entrada serie (TTL) — va al TX de tu micro</td></tr>
-    <tr><td class="num">5</td><td><b>PWM</b></td><td>Salida PWM con la distancia. Sólo funciona en modo serie</td></tr>
-    <tr style="background:#fdf2f2"><td class="num">6</td><td><b style="color:#a52a2a">PS</b></td><td><b>Selección de modo.</b> Sin conectar = serie · a GND = I²C</td></tr>
-    <tr><td class="num">7</td><td>XSHUT</td><td>Apagado del chip, activo en bajo</td></tr>
-    <tr><td class="num">8</td><td>GPIO1</td><td>Interrupción: <b>da un flanco de subida cada vez que hay dato nuevo</b></td></tr>
-    <tr><td class="num">9</td><td><span class="tag i2c">SDA</span></td><td>Datos I²C del chip (sólo con PS a GND)</td></tr>
-    <tr><td class="num">10</td><td><span class="tag i2c">SCL</span></td><td>Reloj I²C del chip (sólo con PS a GND)</td></tr>
+    <tr><td><span class="tag pwr">VIN</span></td><td>Alimentación. <b>Usá 3,3 V.</b> Muchas de estas placas traen regulador y aceptan 5 V, pero no todas tienen adaptación de niveles en las líneas I²C; con 3,3 V andan todas y no arriesgás el chip.</td></tr>
+    <tr><td><span class="tag gnd">GND</span></td><td>Masa</td></tr>
+    <tr><td><span class="tag i2c">SCL</span></td><td>Reloj I²C. Hasta 400 kHz.</td></tr>
+    <tr><td><span class="tag i2c">SDA</span></td><td>Datos I²C.</td></tr>
   </tbody>
 </table>
 
-<div class="grid g2">
-  <div class="card" style="border-left:4px solid #1baf7a">
-    <div class="k">PS sin conectar — modo serie (por defecto)</div>
-    <p style="font-size:10px">El STM32 mide y te manda la distancia <b>ya calculada</b> por UART. <b>El PWM funciona.</b> No necesitás librería. <b>Es el modo que conviene usar.</b></p>
-  </div>
-  <div class="card" style="border-left:4px solid #2a78d6">
-    <div class="k">PS a GND — modo I²C</div>
-    <p style="font-size:10px">El STM32 se desentiende y le hablás al chip VL53L0X directo. Necesitás librería (Pololu o Adafruit). <b>El PWM no funciona.</b></p>
-  </div>
+<div class="box dato">
+  <div class="titulo"><span class="ico dato">i</span> 0x52 y 0x29: la confusión más común de este sensor</div>
+  <p>El datasheet de ST dice <b>Address: 0x52</b>, que es la dirección de <b>8 bits</b> (ya incluye el bit de lectura/escritura). Arduino, <span class="mono">Wire</span> y casi todas las librerías usan direcciones de <b>7 bits</b>: <span class="mono">0x52 &gt;&gt; 1 = 0x29</span>. Si un escáner I²C te reporta <span class="mono">0x29</span>, está todo bien.</p>
 </div>
 
-<h2><span class="n">2</span> Modos de medición</h2>
+<h2><span class="n">2</span> Perfiles de medición</h2>
+
+<p>El sensor se configura por software para privilegiar precisión, alcance o velocidad. Con la librería de Pololu se ajusta con una línea (ver la guía de software).</p>
 
 <table class="t-compacta">
-  <thead><tr><th style="width:14%">Byte</th><th style="width:24%">Modo</th><th style="width:18%">Rango</th><th style="width:16%">Tiempo</th><th style="width:16%">Precisión</th><th style="width:12%">Comando</th></tr></thead>
+  <thead><tr><th style="width:20%">Perfil</th><th style="width:18%">Tiempo</th><th style="width:30%">Rendimiento típico</th><th style="width:32%">Para qué</th></tr></thead>
   <tbody>
-    <tr><td class="mono">0x00</td><td>Larga distancia</td><td class="num">0 – 2 m</td><td class="num">35 ms</td><td class="num">±4 cm</td><td class="mono">A5 50 F5</td></tr>
-    <tr><td class="mono">0x01</td><td>Rápido</td><td class="num">0 – 1,2 m</td><td class="num">22 ms</td><td class="num">±3 cm</td><td class="mono">A5 51 F6</td></tr>
-    <tr style="background:#f1faf1"><td class="mono">0x02</td><td><b>Alta precisión</b> (de fábrica)</td><td class="num">0 – 1,2 m</td><td class="num">200 ms</td><td class="num"><b>±1 cm</b></td><td class="mono">A5 52 F7</td></tr>
-    <tr><td class="mono">0x03</td><td>General</td><td class="num">0 – 1,2 m</td><td class="num">35 ms</td><td class="num">±2 cm</td><td class="mono">A5 53 F8</td></tr>
+    <tr style="background:#f1faf1"><td><b>Default</b></td><td class="num">30 ms</td><td class="num">1,2 m</td><td>Uso general</td></tr>
+    <tr><td><b>High accuracy</b></td><td class="num">200 ms</td><td class="num">1,2 m · &lt; ±3 %</td><td>Medición precisa</td></tr>
+    <tr><td><b>Long range</b></td><td class="num">33 ms</td><td class="num">2 m</td><td>Alcance largo, <b>sólo a oscuras</b></td></tr>
+    <tr><td><b>High speed</b></td><td class="num">20 ms</td><td class="num">1,2 m · ±5 %</td><td>Velocidad, cuando la precisión no importa</td></tr>
   </tbody>
 </table>
-<p style="font-size:8.6px;color:#898781;margin-top:-4px">Fuente: GY-53 manual V1.0, sección 6. Los tiempos son con 115200 baudios.</p>
-
-<div class="box ojo">
-  <div class="titulo"><span class="ico ojo">!</span> La configuración se pierde al apagar</div>
-  <p>Todos los comandos de modo y de baudios son volátiles. Para que sobrevivan al corte de energía hay que mandar <b><span class="mono">A5 25 CA</span></b> (guardar configuración). Si «se desconfigura solo», es esto.</p>
-</div>
+<p style="font-size:8.6px;color:#898781;margin-top:-4px">Fuente: ST VL53L0X Datasheet Rev 2, Tabla 13 «Range profiles».</p>
 
 <h2><span class="n">3</span> Cuánto mide de verdad</h2>
 
-<p>Los «2 metros» son contra un objetivo <b>blanco</b>, en <b>interior</b> y en modo larga distancia. Contra un objetivo gris al sol, contá con 40–50 cm:</p>
+<p>Los «2 metros» son contra un objetivo <b>blanco</b>, en <b>interior</b> y con el perfil <i>long range</i>. Contra un objetivo gris al sol, contá con 40–50 cm:</p>
 
 <figure>
 <svg viewBox="0 0 700 250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Alcance típico del VL53L0X según reflectancia del objetivo y luz ambiente">
@@ -189,105 +165,46 @@
   <rect x="150" y="182" width="464" height="24" rx="5" fill="#fff9ec" stroke="#fab219" stroke-width="1"/>
   <text x="160" y="197" font-size="8.8" fill="#8a6d00"><tspan font-weight="700">El sol es el enemigo:</tspan> tiene mucho infrarrojo en 940 nm y satura el detector.</text>
 </svg>
-<figcaption>Valores <b>típicos</b> con 33 ms de presupuesto. Los mínimos garantizados son más bajos: 120 cm para blanco en interior, 40 cm para gris en exterior. <span style="color:#52514e">(Fuente: ST VL53L0X Datasheet DocID029104 Rev 2, Tabla 11)</span></figcaption>
+<figcaption>Valores <b>típicos</b> con 33 ms de presupuesto. Los mínimos garantizados son más bajos: 120 cm para blanco en interior, 40 cm para gris en exterior. <span style="color:#52514e">(Fuente: ST VL53L0X Datasheet Rev 2, Tabla 11)</span></figcaption>
 </figure>
 
-<h2 class="salto" id="s4"><span class="n">4</span> Protocolo serie</h2>
-
-<p>En modo serie el módulo manda tramas de 8 bytes a 9600 baudios (configurable a 115200), N-8-1.</p>
-
-<figure>
-<svg viewBox="0 0 700 250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Desglose byte por byte de la trama serie del GY-53">
-  <text x="14" y="18" font-size="10.5" font-weight="700" fill="#0b0b0b">Trama de ejemplo del manual del fabricante</text>
-
-  <g text-anchor="middle">
-    <rect x="20"  y="30" width="78" height="34" rx="5" fill="#52514e"/><text x="59"  y="52" font-size="13" font-weight="700" fill="#fff">5A</text>
-    <rect x="104" y="30" width="78" height="34" rx="5" fill="#52514e"/><text x="143" y="52" font-size="13" font-weight="700" fill="#fff">5A</text>
-    <rect x="188" y="30" width="78" height="34" rx="5" fill="#898781"/><text x="227" y="52" font-size="13" font-weight="700" fill="#fff">15</text>
-    <rect x="272" y="30" width="78" height="34" rx="5" fill="#898781"/><text x="311" y="52" font-size="13" font-weight="700" fill="#fff">03</text>
-    <rect x="356" y="30" width="78" height="34" rx="5" fill="#2a78d6"/><text x="395" y="52" font-size="13" font-weight="700" fill="#fff">04</text>
-    <rect x="440" y="30" width="78" height="34" rx="5" fill="#2a78d6"/><text x="479" y="52" font-size="13" font-weight="700" fill="#fff">35</text>
-    <rect x="524" y="30" width="78" height="34" rx="5" fill="#1baf7a"/><text x="563" y="52" font-size="13" font-weight="700" fill="#fff">02</text>
-    <rect x="608" y="30" width="78" height="34" rx="5" fill="#eb6834"/><text x="647" y="52" font-size="13" font-weight="700" fill="#fff">07</text>
-  </g>
-  <g font-size="8" fill="#898781" text-anchor="middle">
-    <text x="59" y="76">byte 0</text><text x="143" y="76">byte 1</text><text x="227" y="76">byte 2</text><text x="311" y="76">byte 3</text>
-    <text x="395" y="76">byte 4</text><text x="479" y="76">byte 5</text><text x="563" y="76">byte 6</text><text x="647" y="76">byte 7</text>
-  </g>
-  <g font-size="8.6" text-anchor="middle" font-weight="600">
-    <text x="101" y="92" fill="#52514e">cabecera</text>
-    <text x="269" y="92" fill="#898781">tipo y cantidad</text>
-    <text x="437" y="92" fill="#1a5aa8">distancia</text>
-    <text x="563" y="92" fill="#0e7a54">modo</text>
-    <text x="647" y="92" fill="#b8471c">checksum</text>
-  </g>
-
-  <rect x="20" y="106" width="380" height="60" rx="7" fill="#f2f7fe" stroke="#2a78d6" stroke-width="1.2"/>
-  <text x="34" y="124" font-size="9.4" font-weight="700" fill="#1a5aa8">Distancia</text>
-  <text x="34" y="140" font-size="10.5" fill="#0b0b0b" font-family="Consolas, monospace">(0x04 &lt;&lt; 8) | 0x35 = 0x0435</text>
-  <text x="34" y="157" font-size="11.5" font-weight="700" fill="#0b0b0b">= 1077 mm</text>
-
-  <rect x="414" y="106" width="272" height="60" rx="7" fill="#fef4f0" stroke="#eb6834" stroke-width="1.2"/>
-  <text x="428" y="124" font-size="9.4" font-weight="700" fill="#b8471c">Checksum</text>
-  <text x="428" y="139" font-size="8.8" fill="#0b0b0b" font-family="Consolas, monospace">5A+5A+15+03+04+35+02 = 0x107</text>
-  <text x="428" y="157" font-size="10.5" font-weight="700" fill="#0b0b0b">8 bits bajos → 0x07 ✓</text>
-
-  <rect x="20" y="180" width="666" height="58" rx="7" fill="#fff9ec" stroke="#fab219" stroke-width="1.3"/>
-  <text x="34" y="198" font-size="10" font-weight="700" fill="#8a6d00">⚠ Errata del manual del fabricante</text>
-  <text x="34" y="213" font-size="8.8" fill="#0b0b0b">El texto dice <tspan font-family="Consolas, monospace">Distance = (Byte3&lt;&lt;8) | Byte4</tspan>, pero su propio ejemplo usa los bytes <tspan font-weight="700">4 y 5</tspan>.</text>
-  <text x="34" y="228" font-size="8.8" fill="#0b0b0b">Verificamos el checksum a mano y confirma que <tspan font-weight="700">la fórmula correcta es (Byte4 &lt;&lt; 8) | Byte5</tspan>.</text>
-</svg>
-<figcaption>El programa de ejemplo que viene con el producto ya implementa esto, con verificación de checksum incluida.</figcaption>
-</figure>
-
-<h3>Comandos</h3>
-<div class="grid g2">
-  <div class="card">
-    <div class="k">Salida</div>
-    <p style="font-size:9.4px" class="mono">A5 45 EA → salida continua<br>A5 15 BA → salida por consulta</p>
-  </div>
-  <div class="card">
-    <div class="k">Baudios y guardado</div>
-    <p style="font-size:9.4px" class="mono">A5 AE 53 → 9600 (por defecto)<br>A5 AF 54 → 115200<br><b>A5 25 CA → guardar configuración</b></p>
-  </div>
-</div>
-
-<h3>Salida PWM</h3>
-<p>Onda cuadrada de 20 Hz donde el tiempo en alto codifica la distancia:</p>
-<p style="text-align:center;font-size:12px;font-weight:700;background:var(--plane);padding:9px;border-radius:7px;border:1px solid var(--hairline)">Distancia (mm) = tiempo en alto (µs) ÷ 10</p>
-<p style="font-size:9px;color:#52514e">Ejemplo: 10 000 µs en alto = 1000 mm. Útil si querés leerlo sin ocupar un puerto serie.</p>
-
-<h2><span class="n">5</span> Especificaciones del chip VL53L0X</h2>
-
+<h3>Precisión</h3>
 <table class="t-compacta">
+  <thead><tr><th style="width:24%">Objetivo</th><th style="width:38%">Interior</th><th style="width:38%">Exterior (≈5 kLux)</th></tr></thead>
+  <tbody>
+    <tr><td><b>Blanco 88 %</b></td><td>4 % a 120 cm (33 ms) · 3 % (66 ms)</td><td>7 % a 60 cm (33 ms) · 6 % (66 ms)</td></tr>
+    <tr><td><b>Gris 17 %</b></td><td>7 % a 70 cm (33 ms) · 6 % (66 ms)</td><td>12 % a 40 cm (33 ms) · 9 % (66 ms)</td></tr>
+  </tbody>
+</table>
+<p style="font-size:8.6px;color:#898781;margin-top:-4px">Desviación estándar. Fuente: ST VL53L0X Datasheet Rev 2, Tabla 12.</p>
+
+<h2 class="salto" id="s4"><span class="n">4</span> Especificaciones del chip</h2>
+
+<table>
   <thead><tr><th style="width:27%">Parámetro</th><th style="width:38%">Valor</th><th style="width:35%">Dónde lo verificás</th></tr></thead>
   <tbody>
     <tr><td>Encapsulado</td><td>Optical LGA12 · 4,40 × 2,40 × 1,00 mm</td><td class="fuente">ST Datasheet DocID029104 Rev 2, <b>Tabla 1</b></td></tr>
     <tr><td>Tensión del chip (AVDD)</td><td class="num">2,6 / 2,8 / 3,5 V</td><td class="fuente">Rev 2, Tabla 1 y <b>Tabla 7</b></td></tr>
+    <tr><td>Tensión de I/O (IOVDD)</td><td>1V8: 1,6/1,8/1,9 V · 2V8: 2,6/2,8/3,5 V</td><td class="fuente">Rev 2, Tabla 7</td></tr>
     <tr><td>Temperatura</td><td class="num">−20 a +70 °C</td><td class="fuente">Rev 2, Tabla 1 y Tabla 7</td></tr>
     <tr><td>Emisor</td><td>VCSEL 940 nm, Clase 1 (IEC 60825-1:2014)</td><td class="fuente">Rev 2, Tabla 1 y portada</td></tr>
-    <tr><td>Interfaz del chip</td><td class="num">I²C hasta 400 kHz</td><td class="fuente">Rev 2, Tabla 1</td></tr>
+    <tr><td>Interfaz</td><td class="num">I²C hasta 400 kHz (modo FAST)</td><td class="fuente">Rev 2, Tabla 1</td></tr>
     <tr><td>Dirección I²C</td><td class="num">0x52 (8 bits) = <b>0x29</b> (7 bits)</td><td class="fuente">Rev 2, Tabla 1</td></tr>
     <tr><td>Campo de visión</td><td class="num">25°</td><td class="fuente">Rev 2, sección 5.2</td></tr>
-    <tr><td>Consumo en reposo</td><td class="num">3 / 5 / 7 µA</td><td class="fuente">Rev 2, <b>Tabla 9</b></td></tr>
+    <tr><td>Consumo en reposo (HW)</td><td class="num">3 / 5 / 7 µA</td><td class="fuente">Rev 2, <b>Tabla 9</b></td></tr>
+    <tr><td>Consumo en reposo (SW)</td><td class="num">4 / 6 / 9 µA</td><td class="fuente">Rev 2, Tabla 9</td></tr>
     <tr><td>Consumo midiendo</td><td class="num">19 mA promedio</td><td class="fuente">Rev 2, Tabla 9</td></tr>
-    <tr><td>Pico de corriente</td><td class="num">hasta 40 mA</td><td class="fuente">Rev 2, Tabla 9, nota 4</td></tr>
-    <tr><td colspan="3" style="background:var(--plane);font-weight:700;padding-top:7px">Del módulo GY-53 completo</td></tr>
-    <tr><td>Alimentación</td><td class="num">3 – 5 V</td><td class="fuente">GY-53 manual V1.0, sección 3</td></tr>
-    <tr><td>Consumo</td><td class="num">25 mA</td><td class="fuente">GY-53 manual V1.0</td></tr>
-    <tr><td>Temperatura de operación</td><td class="num">−20 a +85 °C</td><td class="fuente">GY-53 manual V1.0</td></tr>
-    <tr><td>Almacenamiento</td><td class="num">−40 a +125 °C</td><td class="fuente">GY-53 manual V1.0</td></tr>
-    <tr><td>Dimensiones</td><td class="num">25 × 15,6 mm</td><td class="fuente">GY-53 manual V1.0</td></tr>
-    <tr><td>Respuesta</td><td class="num">22 ms máx</td><td class="fuente">GY-53 manual V1.0</td></tr>
+    <tr><td>Pico de corriente</td><td class="num">hasta 40 mA (incluye el VCSEL)</td><td class="fuente">Rev 2, Tabla 9, nota 4</td></tr>
+    <tr><td>Potencia media</td><td class="num">20 mW a 10 Hz con 33 ms</td><td class="fuente">Rev 2, Tabla 9</td></tr>
   </tbody>
 </table>
 
 <div class="box dato">
-  <div class="titulo"><span class="ico dato">i</span> 0x52 y 0x29 — sólo aplica si usás el modo I²C</div>
-  <p>El datasheet dice <b>0x52</b>, que es la dirección de <b>8 bits</b>. Arduino y casi todas las librerías usan <b>7 bits</b>: <span class="mono">0x52 &gt;&gt; 1 = 0x29</span>. Si un escáner I²C te reporta <span class="mono">0x29</span>, está todo bien. En modo serie esto no te afecta.</p>
+  <div class="titulo"><span class="ico dato">i</span> Sobre la placa</div>
+  <p>El <b>chip</b> VL53L0X tiene hoja de datos oficial de ST y todo lo que sale de ahí es verificable. La <b>placa de 4 pines</b>, en cambio, es un diseño genérico sin fabricante único ni esquemático publicado. Por eso no afirmamos su tensión máxima de entrada ni si adapta niveles: la recomendación de alimentarla con 3,3 V es la que funciona en todas las versiones.</p>
 </div>
 
-<h2><span class="n">6</span> Para qué se usa de verdad</h2>
+<h2><span class="n">5</span> Para qué se usa de verdad</h2>
 
 <div class="grid g3">
   <div class="card"><div class="k">Robótica</div><p>Obstáculos y detección de escalones, donde el ultrasónico falla con superficies blandas.</p></div>
@@ -298,37 +215,58 @@
   <div class="card"><div class="k">Gestos 1D</div><p>Acercar y alejar la mano como control.</p></div>
 </div>
 
-<h2><span class="n">7</span> Por qué el GY-53 y no el chip pelado</h2>
+<h2><span class="n">6</span> Contra qué compite</h2>
 
 <table class="t-compacta">
-  <thead><tr><th style="width:22%">Alternativa</th><th style="width:39%">Dónde gana el GY-53</th><th style="width:39%">Dónde te conviene la otra</th></tr></thead>
+  <thead><tr><th style="width:22%">Alternativa</th><th style="width:39%">Dónde gana el VL53L0X</th><th style="width:39%">Dónde te conviene la otra</th></tr></thead>
   <tbody>
-    <tr><td><b>GY-530 / V2 (pelado)</b></td><td><b>No necesita librería:</b> manda la distancia lista. Tiene UART y PWM además de I²C. Si estás arrancando, es la diferencia entre que ande o no.</td><td>Si el proyecto ya usa I²C y el espacio es crítico.</td></tr>
     <tr><td><b>HC-SR04 ultrasónico</b></td><td>Mucho más chico, haz angosto de 25°, sin problemas con tela o espuma, y no lo afecta el ruido ni la temperatura del aire.</td><td>Si hay <b>luz solar directa</b>, o si el objetivo es transparente o un espejo.</td></tr>
     <tr><td><b>Sharp GP2Y0A (IR)</b></td><td>Lectura digital y lineal, y <b>no depende del color</b> del objeto.</td><td>Casi nunca: el Sharp mide distinto un objeto negro que uno blanco.</td></tr>
+    <tr><td><b>GY-53 (mismo sensor + MCU)</b></td><td>Más chico y más barato; ocupa el bus I²C que ya tenés en vez de un puerto serie.</td><td>Si no querés instalar una librería, o si necesitás salida PWM o serie sin programar nada.</td></tr>
+    <tr><td><b>VL53L1X</b></td><td>Más barato.</td><td>Si necesitás hasta 4 m y campo de visión configurable.</td></tr>
     <tr><td><b>LIDAR</b></td><td>Una fracción del precio y del tamaño.</td><td>Si necesitás más de 2 m o barrido de 360°.</td></tr>
   </tbody>
 </table>
+
+<h2><span class="n">7</span> Varios sensores en el mismo bus</h2>
+
+<div class="box ojo">
+  <div class="titulo"><span class="ico ojo">!</span> Esta variante no tiene pin XSHUT — y eso cambia la estrategia</div>
+  <p>Todos los VL53L0X arrancan en la dirección <span class="mono">0x29</span>. En las placas con pin XSHUT se resuelve apagando todos y encendiéndolos de a uno para cambiarles la dirección por software. <b>La placa de 4 pines no expone XSHUT</b>, así que ese truco no se puede hacer. Las opciones reales:</p>
+  <ul class="limpia" style="margin-bottom:0">
+    <li><b>Un multiplexor I²C</b> (TCA9548A, muy barato): cada sensor va a un canal distinto y los leés de a uno. Es la solución limpia.</li>
+    <li><b>Un bus I²C por sensor</b>: el ESP32 tiene dos controladores I²C por hardware, así que dos sensores salen sin agregar nada.</li>
+  </ul>
+</div>
 
 <h2><span class="n">8</span> Diagnóstico: qué lo hace fallar</h2>
 
 <table class="t-compacta">
   <thead><tr><th style="width:28%">Lo que ves</th><th style="width:36%">Qué está pasando</th><th style="width:36%">Cómo se arregla</th></tr></thead>
   <tbody>
-    <tr style="background:#fff9ec"><td><b>Serie muda</b></td><td>TX y RX no están cruzados</td><td>TX del módulo va al <b>RX</b> del micro. Es el error más común</td></tr>
-    <tr><td>Serie muda</td><td>PS quedó a GND</td><td>Para modo serie, PS va <b>sin conectar</b></td></tr>
-    <tr><td>Checksum inválido seguido</td><td>El módulo está a 115200 y escuchás a 9600</td><td>Cambiá los baudios del programa</td></tr>
-    <tr><td>No responde por I²C</td><td>PS quedó al aire</td><td>Para I²C, PS va <b>a GND</b></td></tr>
-    <tr style="background:#fff9ec"><td><b>No mide nada, recién sacado de la bolsa</b></td><td><b>La película protectora sigue puesta</b> sobre la ventana del sensor.</td><td>Sacala con la uña. Viene de fábrica para proteger la óptica y es fácil no verla.</td></tr>
-    <tr style="background:#fdf2f2"><td><b>«Fuera de rango» al aire libre</b></td><td><b>Luz solar.</b> El sol satura el detector a 940 nm</td><td>Es física, no software. En exterior el alcance cae a 40–80 cm</td></tr>
-    <tr><td>Mide menos de lo esperado</td><td>El objetivo es oscuro</td><td>Un gris al 17 % da 80 cm donde uno blanco da más de 2 m</td></tr>
-    <tr><td>Lecturas erráticas</td><td>Objetivo transparente, especular o muy inclinado</td><td>Vidrio, agua, espejos y metal pulido devuelven mal el pulso</td></tr>
-    <tr><td>Lecturas erráticas</td><td>Fuente floja: pide picos de 40 mA</td><td>Cables cortos y fuente que dé de sobra</td></tr>
-    <tr><td>No mide detrás de un vidrio</td><td><i>Crosstalk</i> óptico</td><td>Requiere calibración de cross-talk (Rev 2, sección 2.3.3)</td></tr>
-    <tr><td>Se desconfigura al apagar</td><td>No mandaste el comando de guardar</td><td><span class="mono">A5 25 CA</span></td></tr>
-    <tr><td>Falla en frío o mucho calor</td><td>Fuera del rango térmico del chip</td><td>El chip es de <b>−20 a +70 °C</b>, más angosto que la mayoría</td></tr>
+    <tr><td>No se detecta el sensor</td><td>Alimentación, o SDA y SCL cruzados.</td><td>Medí 3,3 V entre VIN y GND. Dalos vuelta.</td></tr>
+    <tr><td>El escáner muestra <span class="mono">0x29</span></td><td>No es un error.</td><td><span class="mono">0x52</span> es de 8 bits, <span class="mono">0x29</span> de 7. Es el mismo sensor.</td></tr>
+    <tr style="background:#fff9ec"><td><b>No mide nada, recién sacado de la bolsa</b></td><td>Si el módulo trae una <b>película protectora</b> sobre la ventana del sensor, sigue puesta.</td><td>Sacala con la uña. No todos los lotes la traen, pero si está, es fácil no verla.</td></tr>
+    <tr style="background:#fdf2f2"><td><b>«Fuera de rango» al aire libre</b></td><td><b>Luz solar.</b> El sol satura el detector a 940 nm.</td><td>Es física, no software. En exterior el alcance cae a 40–80 cm.</td></tr>
+    <tr><td>Mide menos de lo esperado</td><td>El objetivo es oscuro.</td><td>Un gris al 17 % da 80 cm donde uno blanco da más de 2 m.</td></tr>
+    <tr><td>Lecturas erráticas</td><td>Objetivo transparente, especular o muy inclinado.</td><td>Vidrio, agua, espejos y metal pulido devuelven mal el pulso.</td></tr>
+    <tr><td>Lecturas erráticas</td><td>Fuente floja: el sensor pide picos de 40 mA.</td><td>Cables cortos y fuente que dé de sobra.</td></tr>
+    <tr><td>No mide detrás de un vidrio</td><td><i>Crosstalk</i> óptico del vidrio de protección.</td><td>Requiere calibración de cross-talk (Rev 2, sección 2.3.3).</td></tr>
+    <tr><td>Anda con ESP32 pero no con Arduino UNO</td><td>El UNO es de 5 V y las líneas I²C del módulo quedan a 2,8 V: al UNO le llegan como nivel dudoso.</td><td>Usá un micro de 3,3 V (ESP32, ESP8266) o un adaptador de niveles.</td></tr>
+    <tr><td>Dos sensores, siempre lee el mismo</td><td>Los dos están en <span class="mono">0x29</span> y no hay XSHUT para separarlos.</td><td>Multiplexor TCA9548A o un bus I²C por sensor (sección 7).</td></tr>
+    <tr><td>Falla en frío o mucho calor</td><td>Fuera del rango térmico del chip.</td><td>El chip es de <b>−20 a +70 °C</b>, más angosto que la mayoría.</td></tr>
   </tbody>
 </table>
+
+<div class="box peligro">
+  <div class="titulo"><span class="ico peligro">×</span> Límites que no se pueden esquivar</div>
+  <ul class="limpia mala" style="margin-bottom:0">
+    <li><b>La luz solar lo mata.</b> No hay configuración que lo compense: es cómo funciona el detector.</li>
+    <li><b>El chip es de 2,8 V.</b> Sin regulador ni adaptación de niveles, 5 V lo dañan.</li>
+    <li><b>Temperatura −20 a +70 °C.</b> Ni intemperie en verano ni freezer.</li>
+    <li><b>Sin XSHUT no hay cambio de dirección</b>: varios sensores requieren multiplexor.</li>
+  </ul>
+</div>
 
 </body>
 </html>

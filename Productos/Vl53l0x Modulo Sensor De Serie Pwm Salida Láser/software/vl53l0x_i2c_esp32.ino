@@ -1,17 +1,17 @@
 /*
- * GY-53 (VL53L0X) - Medicion de distancia por I2C
+ * VL53L0X (modulo de 4 pines) - Medicion de distancia por I2C
+ * Placa: ESP32 (cualquiera)
  *
- * ALTERNATIVA al modo serie. El GY-53 arranca en modo serie y ese es el
- * camino recomendado: usa gy53_uart_esp32.ino, que no necesita libreria.
+ * Conexion:
+ *   VIN -> 3.3V   (no 5V: el chip es de 2.8V)
+ *   GND -> GND
+ *   SCL -> GPIO22 (ESP32 clasico)  o  GPIO6 (ESP32-C3 SuperMini)
+ *   SDA -> GPIO21 (ESP32 clasico)  o  GPIO5 (ESP32-C3 SuperMini)
  *
- * Para usar I2C hay que poner el pin PS (pin 6) A GND. Asi el STM32 del
- * modulo se desentiende y le hablamos al chip VL53L0X directo.
- * En este modo la salida PWM deja de funcionar.
+ * Direccion I2C: 0x29 en 7 bits. El datasheet la escribe 0x52, que es la
+ * de 8 bits (0x52 >> 1 = 0x29). Es el mismo sensor.
  *
- * Direccion I2C: 0x29 en 7 bits (el datasheet la escribe 0x52, que es la de
- * 8 bits; 0x52 >> 1 = 0x29). Es el mismo sensor.
- *
- * Libreria: VL53L0X de Pololu (ver la guia de software)
+ * Libreria: VL53L0X de Pololu (Library Manager -> buscar "VL53L0X")
  */
 
 #include <Wire.h>
@@ -36,15 +36,23 @@ void setup() {
 
   if (!sensor.init()) {
     Serial.println("No se detecta el VL53L0X.");
-    Serial.println("Revisa: alimentacion 3.3V, SDA/SCL, y en el GY-53 que PS este a GND.");
+    Serial.println("Revisa: 3.3V entre VIN y GND, y que SDA/SCL no esten cruzados.");
     while (1) delay(1000);
   }
 
   Serial.println("VL53L0X listo.");
 
-  // Presupuesto de tiempo: cuanto mas alto, mas preciso y mas lento.
-  // 33000 us = 33 ms (por defecto).  200000 us = 200 ms (alta precision).
+  // --- Perfil de medicion ---
+  // Presupuesto de tiempo por lectura. Mas tiempo = mas precision, menos velocidad.
+  //   33000 us = 33 ms  -> por defecto, uso general
+  //  200000 us = 200 ms -> alta precision (+/-3 %)
+  //   20000 us = 20 ms  -> rapido (+/-5 %)
   sensor.setMeasurementTimingBudget(33000);
+
+  // Perfil LONG RANGE (hasta 2 m, solo a oscuras): descomenta estas tres lineas
+  // sensor.setSignalRateLimit(0.1);
+  // sensor.setVcselPulsePeriod(VL53L0X::VcselPeriodPreRange, 18);
+  // sensor.setVcselPulsePeriod(VL53L0X::VcselPeriodFinalRange, 14);
 
   // Modo continuo: el sensor mide solo y nosotros leemos cuando queremos
   sensor.startContinuous();
@@ -56,8 +64,8 @@ void loop() {
   if (sensor.timeoutOccurred()) {
     Serial.println("TIMEOUT - el sensor dejo de responder");
   } else if (mm >= 8190) {
-    // Valores de 8190/8191 significan "fuera de rango": nada que reflejar,
-    // objeto muy lejos, superficie oscura, o demasiada luz solar
+    // 8190/8191 = "fuera de rango": nada que reflejar, objeto muy lejos,
+    // superficie oscura, o demasiada luz solar
     Serial.println("Fuera de rango");
   } else {
     Serial.print(mm);

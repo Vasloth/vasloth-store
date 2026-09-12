@@ -37,15 +37,14 @@ Termómetro digital 1-Wire en vaina de acero inoxidable. −55 a +125 °C, ±0,5
 
 > ⚠️ Necesita una **resistencia de 4,7 kΩ** entre el cable de datos y el de alimentación. No viene incluida y sin ella no funciona.
 
-### 📏 Sensor láser de distancia GY-53 (VL53L0X)
-Medidor de distancia por tiempo de vuelo, hasta 2 m, con microcontrolador propio. Salida serie, PWM e I²C.
+### 📏 Sensor láser de distancia VL53L0X (módulo I²C de 4 pines)
+Medidor de distancia por tiempo de vuelo, hasta 2 m con resolución de 1 mm. Cuatro pines: VIN, GND, SCL, SDA.
 
-- [Ficha técnica](Productos/Vl53l0x%20Modulo%20Sensor%20De%20Serie%20Pwm%20Salida%20L%C3%A1ser/ficha%20tecnica/GY-53%20VL53L0X%20-%20Ficha%20Tecnica.pdf)
-- [Guía de software](Productos/Vl53l0x%20Modulo%20Sensor%20De%20Serie%20Pwm%20Salida%20L%C3%A1ser/software/GY-53%20VL53L0X%20-%20Guia%20de%20Software.pdf)
-- [Código — modo serie (recomendado)](Productos/Vl53l0x%20Modulo%20Sensor%20De%20Serie%20Pwm%20Salida%20L%C3%A1ser/software/gy53_uart_esp32.ino)
-- [Código — modo I²C](Productos/Vl53l0x%20Modulo%20Sensor%20De%20Serie%20Pwm%20Salida%20L%C3%A1ser/software/vl53l0x_i2c_esp32.ino)
+- [Ficha técnica](Productos/Vl53l0x%20Modulo%20Sensor%20De%20Serie%20Pwm%20Salida%20L%C3%A1ser/ficha%20tecnica/VL53L0X%20-%20Ficha%20Tecnica.pdf)
+- [Guía de software](Productos/Vl53l0x%20Modulo%20Sensor%20De%20Serie%20Pwm%20Salida%20L%C3%A1ser/software/VL53L0X%20-%20Guia%20de%20Software.pdf)
+- [Código de ejemplo](Productos/Vl53l0x%20Modulo%20Sensor%20De%20Serie%20Pwm%20Salida%20L%C3%A1ser/software/vl53l0x_i2c_esp32.ino)
 
-> ⚠️ Viene con una **película protectora** sobre el sensor. Sacala antes de usarlo o no va a medir.
+> ⚠️ Alimentalo con **3,3 V**, no con 5 V. Necesita la librería **VL53L0X de Pololu** (se instala desde el Library Manager). Si la ventana del sensor trae una película protectora, sacala antes de usarlo.
 
 ---
 
@@ -68,7 +67,6 @@ Los datos técnicos salen de los documentos oficiales de cada fabricante:
 | CH340C | WCH, *CH340 Datasheet* v3B |
 | DS18B20 | Dallas / Maxim / Analog Devices, *DS18B20 Datasheet* |
 | VL53L0X | STMicroelectronics, *VL53L0X Datasheet* DocID029104 Rev 2 |
-| GY-53 | *GY-53 Infrared ranging module manual* V1.0 |
 | Pines por defecto en Arduino | `arduino-esp32`, archivos `pins_arduino.h` y `boards.txt` |
 
 Cada tabla de la ficha indica la tabla o sección exacta de donde sale cada valor.
